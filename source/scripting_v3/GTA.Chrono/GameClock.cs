@@ -367,7 +367,7 @@ namespace GTA.Chrono
         }
 
         /// <summary>
-        /// Normalizes an date just like how the game clock normalizes the date if the day value is not normalized.
+        /// Normalizes a date just like how the game clock normalizes the date if the day value is not normalized.
         /// Cannot normalize if month0 is not in the range of 0 to 11 since the method can't determine how many days
         /// to add or subtract.
         /// </summary>
@@ -404,6 +404,7 @@ namespace GTA.Chrono
             static void ShiftMonthsAndNormalizeYearAndMonth(ref int year, ref int month0, int diff)
             {
                 month0 += diff;
+
                 if (month0 > 11)
                 {
                     do
@@ -412,21 +413,20 @@ namespace GTA.Chrono
                         year++;
                     }
                     while (month0 > 11);
+
+                    return;
                 }
-                else if (month0 < 0)
+
+                while (month0 < 0)
                 {
-                    do
-                    {
-                        month0 += 12;
-                        year--;
-                    }
-                    while (month0 < 0);
+                    month0 += 12;
+                    year--;
                 }
             }
         }
 
         /// <summary>
-        /// Normalizes an time in the almost same way from how the game clock normalizes the hour, minute, and second
+        /// Normalizes a time in the almost same way from how the game clock normalizes the hour, minute, and second
         /// (which is done by shifting them by one at the same time). Returns the number of day to add for the
         /// normalized date.
         /// </summary>
@@ -515,7 +515,7 @@ namespace GTA.Chrono
 
         /// <summary>
         /// Get the number of month. Returns 31 if month0 is not in the range of 0 to 11 for smaller code size
-        /// (having an statement that throws an exception significantly increases code size).
+        /// (having a statement that throws an exception significantly increases code size).
         /// </summary>
         private static int GetDaysOfMonth0(int month0, int year)
         {
