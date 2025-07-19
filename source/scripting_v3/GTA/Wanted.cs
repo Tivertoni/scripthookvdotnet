@@ -409,10 +409,9 @@ namespace GTA
         /// gray to indicate that cops are searching.
         /// </summary>
         /// <remarks>
-        /// Technically, this property returns <see langword="true"/> when the flag for stars graying out is set
-        /// and <see cref="TimeLastSpotted"/> has more value by more than <c>1000</c> or <c>2000</c> (depending on
-        /// an unknown state).
-        /// than <see cref="Game.GameTime"/>.
+        /// Technically, this property returns <see langword="true"/> when the flag for graying out stars is set,
+        /// and <see cref="TimeLastSpotted"/> is greater than <see cref="Game.GameTime"/> by more than
+        /// <c>1000</c> (for SP) or <c>2000</c> (for MP).
         /// </remarks>
         public bool HasGrayedOutStars => Function.Call<bool>(Hash.ARE_PLAYER_STARS_GREYED_OUT, _playerIndex);
 
