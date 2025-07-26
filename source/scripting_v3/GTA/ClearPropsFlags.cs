@@ -4,6 +4,7 @@
 //
 
 using System;
+using GTA.Math;
 
 namespace GTA
 {
@@ -18,7 +19,7 @@ namespace GTA
         /// Clears door <see cref="Prop"/>s that are managed by native door system.
         /// </summary>
         /// <remarks>
-        /// Strictly, this flag lets <see cref="World.ClearAreaOfProps(Math.Vector3, float, ClearPropsFlags)"/> clear <see cref="Prop"/>s that uses the <c>CDoor</c> class (a subclass of <c>CObject</c>) that are managed by native door system.
+        /// Strictly, this flag lets <see cref="World.ClearAreaOfProps(Vector3, float, ClearPropsFlags)"/> clear <see cref="Prop"/>s that uses the <c>CDoor</c> class (a subclass of <c>CObject</c>) that are managed by native door system.
         /// Door <see cref="Prop"/>s created as a regular <c>CObject</c> can be deleted without this flag.
         /// </remarks>
         IncludeDoors = 4,

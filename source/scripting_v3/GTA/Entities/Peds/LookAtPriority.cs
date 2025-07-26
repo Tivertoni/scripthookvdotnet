@@ -4,12 +4,13 @@
 //
 
 using System;
+using GTA.Math;
 
 namespace GTA
 {
     /// <summary>
     /// Set of enumerations of the available look priorities for <see cref="TaskInvoker.LookAt(Entity, int, LookAtFlags, LookAtPriority)"/>
-    /// and <see cref="TaskInvoker.LookAt(Math.Vector3, int, LookAtFlags, LookAtPriority)"/>.
+    /// and <see cref="TaskInvoker.LookAt(Vector3, int, LookAtFlags, LookAtPriority)"/>.
     /// </summary>
     public enum LookAtPriority
     {

@@ -4,11 +4,12 @@
 //
 
 using System;
+using GTA.Math;
 
 namespace GTA
 {
     /// <summary>
-    /// An enumeration of the flags to be passed in to <see cref="World.GetSafePositionForPed(Math.Vector3, out Math.Vector3, GetSafePositionFlags)"/>
+    /// An enumeration of the flags to be passed in to <see cref="World.GetSafePositionForPed(Vector3, out Vector3, GetSafePositionFlags)"/>
     /// to govern which navmesh polygons it considers.
     /// </summary>
     /// <remarks>
