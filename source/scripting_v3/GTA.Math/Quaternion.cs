@@ -394,12 +394,14 @@ namespace GTA.Math
         public static Quaternion Slerp(Quaternion start, Quaternion end, float amount)
         {
             Quaternion result = Zero;
-            float kEpsilon = (float)(1.192093E-07);
+            const float K_EPSILON = (float)(1.192093E-07);
+            const float ONE_MINUS_K_EPSILON = 1.0f - K_EPSILON;
+
             float opposite;
             float inverse;
             float dot = Dot(start, end);
 
-            if (System.Math.Abs(dot) > (1.0f - kEpsilon))
+            if (System.Math.Abs(dot) > ONE_MINUS_K_EPSILON)
             {
                 inverse = 1.0f - amount;
                 opposite = amount * System.Math.Sign(dot);

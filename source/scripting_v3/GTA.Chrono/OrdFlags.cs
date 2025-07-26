@@ -94,7 +94,7 @@ namespace GTA.Chrono
         {
             return Ol switch
             {
-                (>= Internals.MinOl and <= Internals.MaxOl) => this,
+                >= Internals.MinOl and <= Internals.MaxOl => this,
                 _ => null
             };
         }

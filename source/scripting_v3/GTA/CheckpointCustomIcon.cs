@@ -77,8 +77,6 @@ namespace GTA
                     {
                         ThrowHelper.ThrowArgumentOutOfRangeException(nameof(value), "The maximum number value is 99");
                     }
-
-                    _number = value;
                 }
                 else
                 {
@@ -86,9 +84,9 @@ namespace GTA
                     {
                         ThrowHelper.ThrowArgumentOutOfRangeException(nameof(value), "The maximum number value when not using CheckpointCustomIconStyle.Number is 9");
                     }
-
-                    _number = value;
                 }
+
+                _number = value;
             }
         }
 
@@ -134,7 +132,7 @@ namespace GTA
 
         public override string ToString()
         {
-            return Style.ToString() + Number.ToString();
+            return Style + Number.ToString();
         }
     }
 }

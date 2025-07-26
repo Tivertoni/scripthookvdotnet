@@ -15,7 +15,7 @@ namespace GTA.UI
     public static class Screen
     {
         #region Fields
-        private static readonly string[] _effects = new string[] {
+        private static readonly string[] _effects = {
             "SwitchHUDIn",
             "SwitchHUDOut",
             "FocusIn",

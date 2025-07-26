@@ -106,7 +106,7 @@ namespace GTA
                     return Array.Empty<VehicleWheelType>();
                 }
 
-                var res = new List<VehicleWheelType>()
+                var res = new List<VehicleWheelType>
                 {
                     VehicleWheelType.Sport,
                     VehicleWheelType.Muscle,
@@ -199,10 +199,8 @@ namespace GTA
                 {
                     return this[VehicleModType.Livery].Index;
                 }
-                else
-                {
-                    return Function.Call<int>(Hash.GET_VEHICLE_LIVERY, _owner.Handle);
-                }
+
+                return Function.Call<int>(Hash.GET_VEHICLE_LIVERY, _owner.Handle);
             }
             set
             {

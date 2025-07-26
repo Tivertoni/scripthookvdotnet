@@ -17,7 +17,7 @@ namespace GTA.UI
     {
         #region Fields
 
-        private static readonly string[] s_iconNames = new string[] {
+        private static readonly string[] s_iconNames = {
             "CHAR_ABIGAIL", "CHAR_ALL_PLAYERS_CONF", "CHAR_AMANDA", "CHAR_AMMUNATION", "CHAR_ANDREAS",
             "CHAR_ANTONIA", "CHAR_ARTHUR", "CHAR_ASHLEY", "CHAR_BANK_BOL", "CHAR_BANK_FLEECA", "CHAR_BANK_MAZE",
             "CHAR_BARRY", "CHAR_BEVERLY", "CHAR_BIKESITE", "CHAR_BLANK_ENTRY", "CHAR_BLIMP", "CHAR_BLOCKED", "CHAR_BOATSITE",

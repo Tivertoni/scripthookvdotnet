@@ -466,10 +466,8 @@ namespace GTA
                 {
                     return modTypeForNativeFunctionInt - 14;
                 }
-                else
-                {
-                    return modTypeForNativeFunctionInt + 25;
-                }
+
+                return modTypeForNativeFunctionInt + 25;
             }
 
             return modTypeForNativeFunctionInt;
@@ -486,7 +484,8 @@ namespace GTA
             {
                 return (VehicleModType)(modTypeForInternalCode - 25);
             }
-            else if (10 < modTypeForInternalCode && modTypeForInternalCode < 36)
+
+            if (10 < modTypeForInternalCode && modTypeForInternalCode < 36)
             {
                 return (VehicleModType)(modTypeForInternalCode + 14);
             }

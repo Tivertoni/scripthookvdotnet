@@ -45,10 +45,8 @@ namespace GTA
                     _weaponComponents.Add(componentHash, component);
                     return component;
                 }
-                else
-                {
-                    return _invalidComponent;
-                }
+
+                return _invalidComponent;
             }
         }
 

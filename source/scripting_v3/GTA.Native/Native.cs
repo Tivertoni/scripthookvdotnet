@@ -1754,10 +1754,8 @@ namespace GTA.Native
             {
                 return ObjectFromNative<T>(result);
             }
-            else
-            {
-                return (T)ObjectFromNative(typeof(T), result);
-            }
+
+            return (T)ObjectFromNative(typeof(T), result);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -3165,10 +3163,8 @@ namespace GTA.Native
             {
                 return (T)(object)SHVDN.StringMarshal.PtrToStringUtf8(MemoryAddress);
             }
-            else
-            {
-                return Function.ReturnValueFromResultAddress<T>((ulong*)(MemoryAddress.ToPointer()));
-            }
+
+            return Function.ReturnValueFromResultAddress<T>((ulong*)(MemoryAddress.ToPointer()));
         }
 
         /// <summary>

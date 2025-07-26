@@ -150,39 +150,35 @@ namespace GTA
                         {
                             return Game.GetLocalizedString("CMOD_WHE_0");
                         }
-                        else
-                        {
-                            return Game.GetLocalizedString("CMOD_WHE_B_0");
-                        }
+
+                        return Game.GetLocalizedString("CMOD_WHE_B_0");
                     }
                     if (index >= count / 2)
                     {
                         return Game.GetLocalizedString("CHROME") + " " +
                                Game.GetLocalizedString(Function.Call<string>(Hash.GET_MOD_TEXT_LABEL, Vehicle.Handle, (int)Type, index));
                     }
-                    else
-                    {
-                        return Game.GetLocalizedString(Function.Call<string>(Hash.GET_MOD_TEXT_LABEL, Vehicle.Handle, (int)Type, index));
-                    }
+
+                    return Game.GetLocalizedString(Function.Call<string>(Hash.GET_MOD_TEXT_LABEL, Vehicle.Handle, (int)Type, index));
                 }
 
                 switch (Type)
                 {
                     case VehicleModType.Armor:
-                        return Game.GetLocalizedString("CMOD_ARM_" + (index + 1).ToString());
+                        return Game.GetLocalizedString("CMOD_ARM_" + (index + 1));
                     case VehicleModType.Brakes:
-                        return Game.GetLocalizedString("CMOD_BRA_" + (index + 1).ToString());
+                        return Game.GetLocalizedString("CMOD_BRA_" + (index + 1));
                     case VehicleModType.Engine:
                         if (index == -1)
                         {
                             //Engine doesn't list anything in LSC for no parts, but there is a setting with no part. so just use armours none
                             return Game.GetLocalizedString("CMOD_ARM_0");
                         }
-                        return Game.GetLocalizedString("CMOD_ENG_" + (index + 2).ToString());
+                        return Game.GetLocalizedString("CMOD_ENG_" + (index + 2));
                     case VehicleModType.Suspension:
-                        return Game.GetLocalizedString("CMOD_SUS_" + (index + 1).ToString());
+                        return Game.GetLocalizedString("CMOD_SUS_" + (index + 1));
                     case VehicleModType.Transmission:
-                        return Game.GetLocalizedString("CMOD_GBX_" + (index + 1).ToString());
+                        return Game.GetLocalizedString("CMOD_GBX_" + (index + 1));
                 }
                 if (index > -1)
                 {
@@ -192,34 +188,32 @@ namespace GTA
                         cur = Game.GetLocalizedString(cur);
                         if (cur == "" || cur == "NULL")
                         {
-                            return LocalizedTypeName + " " + (index + 1).ToString();
+                            return LocalizedTypeName + " " + (index + 1);
                         }
                         return cur;
                     }
-                    return LocalizedTypeName + " " + (index + 1).ToString();
+                    return LocalizedTypeName + " " + (index + 1);
                 }
-                else
-                {
-                    switch (Type)
-                    {
-                        case VehicleModType.AirFilter:
-                            if (Vehicle.Model == VehicleHash.Tornado)
-                            {
-                            }
-                            break;
-                        case VehicleModType.Struts:
-                            switch ((VehicleHash)Vehicle.Model)
-                            {
-                                case VehicleHash.Banshee:
-                                case VehicleHash.Banshee2:
-                                case VehicleHash.SultanRS:
-                                    return Game.GetLocalizedString("CMOD_COL5_41");
-                            }
-                            break;
 
-                    }
-                    return Game.GetLocalizedString("CMOD_DEF_0");
+                switch (Type)
+                {
+                    case VehicleModType.AirFilter:
+                        if (Vehicle.Model == VehicleHash.Tornado)
+                        {
+                        }
+                        break;
+                    case VehicleModType.Struts:
+                        switch ((VehicleHash)Vehicle.Model)
+                        {
+                            case VehicleHash.Banshee:
+                            case VehicleHash.Banshee2:
+                            case VehicleHash.SultanRS:
+                                return Game.GetLocalizedString("CMOD_COL5_41");
+                        }
+                        break;
+
                 }
+                return Game.GetLocalizedString("CMOD_DEF_0");
             }
         }
 

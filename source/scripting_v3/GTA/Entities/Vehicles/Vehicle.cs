@@ -2772,7 +2772,7 @@ namespace GTA
         }
         public static string GetClassDisplayName(VehicleClass vehicleClass)
         {
-            return "VEH_CLASS_" + ((int)vehicleClass).ToString();
+            return "VEH_CLASS_" + ((int)vehicleClass);
         }
         public static string GetModelMakeName(Model vehicleModel)
         {
