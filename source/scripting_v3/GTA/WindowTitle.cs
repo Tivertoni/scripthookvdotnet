@@ -68,7 +68,7 @@ namespace GTA
         /// </summary>
         InvalidOutfitName,
         /// <summary>
-        /// "Outfit Name"
+        /// "Outfit Name"S
         /// </summary>
         OutfitName,
         /// <summary>
