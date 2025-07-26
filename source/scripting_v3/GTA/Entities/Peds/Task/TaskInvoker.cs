@@ -13,11 +13,12 @@ namespace GTA
     public sealed class TaskInvoker
     {
         #region Fields
-        readonly Ped _ped;
+
+        private readonly Ped _ped;
         #endregion
 
         // this value is unlikely to get changed in future updates as some of the script task natives use this value as a constant float value
-        const float DefaultNavmeshFinalHeading = 40000f;
+        private const float DefaultNavmeshFinalHeading = 40000f;
 
         internal TaskInvoker(Ped ped)
         {
@@ -872,16 +873,16 @@ namespace GTA
         {
             // There must be a network clone before the 2 params below can have actual effect, but we
             // don't know how to create one without the game being online/networked.
-            const bool allowOverrideCloneUpdate = false;
+            const bool ALLOW_OVERRIDE_CLONE_UPDATE = false;
             // This param does not have any effect on peds who aren't network clones. You'll need to request
             // the clip dicts specified in the mrf file (named what `networkName` says) on your own before you can
             // have peds properly perform the animations.
-            const string clipDictStr = null;
+            const string CLIP_DICT_STR = null;
 
             AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
 
             Function.Call(Hash.TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS, _ped.Handle, networkName,
-                durationArg, allowOverrideCloneUpdate, clipDictStr, (int)flags);
+                durationArg, ALLOW_OVERRIDE_CLONE_UPDATE, CLIP_DICT_STR, (int)flags);
         }
 
         /// <summary>
@@ -913,13 +914,13 @@ namespace GTA
             EulerRotationOrder rotOrder = EulerRotationOrder.YXZ, AnimationBlendDuration? blendDuration = null,
             MoveNetworkFlags flags = MoveNetworkFlags.Default)
         {
-            const bool allowOverrideCloneUpdate = false;
-            const string clipDictStr = null;
+            const bool ALLOW_OVERRIDE_CLONE_UPDATE = false;
+            const string CLIP_DICT_STR = null;
 
             AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
 
             Function.Call(Hash.TASK_MOVE_NETWORK_ADVANCED_BY_NAME, _ped.Handle, networkName, pos.X, pos.Y, pos.Z,
-                rot.X, rot.Y, rot.Z, (int)rotOrder, durationArg, allowOverrideCloneUpdate, clipDictStr, (int)flags);
+                rot.X, rot.Y, rot.Z, (int)rotOrder, durationArg, ALLOW_OVERRIDE_CLONE_UPDATE, CLIP_DICT_STR, (int)flags);
         }
 
         /// <summary>
@@ -955,16 +956,15 @@ namespace GTA
 
             unsafe
             {
-                using (TaskMoVEScriptedInitialParametersStruct paramStruct = initParams.BuildStructForNatives())
-                {
-                    const bool allowOverrideCloneUpdate = false;
-                    const string clipDictStr = null;
+                using TaskMoVEScriptedInitialParametersStruct paramStruct = initParams.BuildStructForNatives();
 
-                    AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
+                const bool ALLOW_OVERRIDE_CLONE_UPDATE = false;
+                const string CLIP_DICT_STR = null;
 
-                    Function.Call(Hash.TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS, _ped.Handle, networkName,
-                        &paramStruct, durationArg, allowOverrideCloneUpdate, clipDictStr, (int)flags);
-                }
+                AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
+
+                Function.Call(Hash.TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS, _ped.Handle, networkName,
+                    &paramStruct, durationArg, ALLOW_OVERRIDE_CLONE_UPDATE, CLIP_DICT_STR, (int)flags);
             }
         }
 
@@ -1007,17 +1007,16 @@ namespace GTA
 
             unsafe
             {
-                using (TaskMoVEScriptedInitialParametersStruct paramStruct = initParams.BuildStructForNatives())
-                {
-                    const bool allowOverrideCloneUpdate = false;
-                    const string clipDictStr = null;
+                using TaskMoVEScriptedInitialParametersStruct paramStruct = initParams.BuildStructForNatives();
 
-                    AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
+                const bool ALLOW_OVERRIDE_CLONE_UPDATE = false;
+                const string CLIP_DICT_STR = null;
 
-                    Function.Call(Hash.TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS, _ped.Handle, networkName,
-                        &paramStruct, pos.X, pos.Y, pos.Z, rot.X, rot.Y, rot.Z, (int)rotOrder, durationArg,
-                        allowOverrideCloneUpdate, clipDictStr, (int)flags);
-                }
+                AnimationBlendDuration durationArg = blendDuration ?? AnimationBlendDuration.Instant;
+
+                Function.Call(Hash.TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS, _ped.Handle, networkName,
+                    &paramStruct, pos.X, pos.Y, pos.Z, rot.X, rot.Y, rot.Z, (int)rotOrder, durationArg,
+                    ALLOW_OVERRIDE_CLONE_UPDATE, CLIP_DICT_STR, (int)flags);
             }
         }
 

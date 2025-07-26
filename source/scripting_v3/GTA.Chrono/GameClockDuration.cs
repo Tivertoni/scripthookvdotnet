@@ -23,35 +23,35 @@ namespace GTA.Chrono
         }
 
         /// The number of seconds in a minute.
-        const long SecsPerMinute = 60;
+        private const long SecsPerMinute = 60;
 
         /// The number of seconds in an hour.
-        const long SecsPerHour = 3600;
+        private const long SecsPerHour = 3600;
 
         /// The number of (non-leap) seconds in days.
-        const long SecsPerDay = 86_400;
+        private const long SecsPerDay = 86_400;
 
         /// The number of (non-leap) seconds in a week.
-        const long SecsPerWeek = 604_800;
+        private const long SecsPerWeek = 604_800;
 
-        const long LeapYearCountOfInt32 = 1041529570;
-        const long NonLeapYearCountOfInt32 = 3253437726;
+        private const long LeapYearCountOfInt32 = 1041529570;
+        private const long NonLeapYearCountOfInt32 = 3253437726;
 
         /// <summary>
         /// The number of days elapsed since January 1st, the -2147483648 year until December 31st, the 2147483647 year,
         /// which will result in 1_568_704_592_609 days. Subtracted by 1 because 1 day is taken for the min date value.
         /// </summary>
-        const long DayCountUInt32YearsLaterSinceInt32MinValueYear = (LeapYearCountOfInt32 * 366)
+        private const long DayCountUInt32YearsLaterSinceInt32MinValueYear = (LeapYearCountOfInt32 * 366)
             + (NonLeapYearCountOfInt32 * 365) - 1;
 
         /// <summary>
         /// The same value as 135_536_076_801_503_999 seconds.
         /// </summary>
-        const long MaxSecDifference = (DayCountUInt32YearsLaterSinceInt32MinValueYear) * SecsPerDay
-                                      + 23 * SecsPerHour + 59 * SecsPerMinute + 59;
+        private const long MaxSecDifference = (DayCountUInt32YearsLaterSinceInt32MinValueYear) * SecsPerDay
+                                              + 23 * SecsPerHour + 59 * SecsPerMinute + 59;
 
-        const long MinSecDifference = -((DayCountUInt32YearsLaterSinceInt32MinValueYear) * SecsPerDay
-                                        + 23 * SecsPerHour + 59 * SecsPerMinute + 59);
+        private const long MinSecDifference = -((DayCountUInt32YearsLaterSinceInt32MinValueYear) * SecsPerDay
+                                                + 23 * SecsPerHour + 59 * SecsPerMinute + 59);
 
         /// <summary>
         /// Represents the zero <see cref="GameClockDuration"/> value. This field is read-only.
@@ -237,9 +237,9 @@ namespace GTA.Chrono
         /// </exception>
         public static GameClockDuration FromWeeks(long weeks)
         {
-            const long minWeeks = MinSecDifference / SecsPerWeek;
-            const long maxWeeks = MaxSecDifference / SecsPerWeek;
-            ThrowHelper.CheckArgumentRange(nameof(weeks), weeks, minWeeks, maxWeeks);
+            const long MIN_WEEKS = MinSecDifference / SecsPerWeek;
+            const long MAX_WEEKS = MaxSecDifference / SecsPerWeek;
+            ThrowHelper.CheckArgumentRange(nameof(weeks), weeks, MIN_WEEKS, MAX_WEEKS);
 
             return new GameClockDuration(weeks * SecsPerWeek);
         }
@@ -254,9 +254,9 @@ namespace GTA.Chrono
         /// </exception>
         public static GameClockDuration FromDays(long days)
         {
-            const long minDays = MinSecDifference / SecsPerDay;
-            const long maxDays = MaxSecDifference / SecsPerDay;
-            ThrowHelper.CheckArgumentRange(nameof(days), days, minDays, maxDays);
+            const long MIN_DAYS = MinSecDifference / SecsPerDay;
+            const long MAX_DAYS = MaxSecDifference / SecsPerDay;
+            ThrowHelper.CheckArgumentRange(nameof(days), days, MIN_DAYS, MAX_DAYS);
 
             return new GameClockDuration(days * SecsPerDay);
         }
@@ -271,9 +271,9 @@ namespace GTA.Chrono
         /// </exception>
         public static GameClockDuration FromHours(long hours)
         {
-            const long minHours = MinSecDifference / SecsPerHour;
-            const long maxHours = MaxSecDifference / SecsPerHour;
-            ThrowHelper.CheckArgumentRange(nameof(hours), hours, minHours, maxHours);
+            const long MIN_HOURS = MinSecDifference / SecsPerHour;
+            const long MAX_HOURS = MaxSecDifference / SecsPerHour;
+            ThrowHelper.CheckArgumentRange(nameof(hours), hours, MIN_HOURS, MAX_HOURS);
 
             return new GameClockDuration(hours * SecsPerHour);
         }
@@ -288,9 +288,9 @@ namespace GTA.Chrono
         /// </exception>
         public static GameClockDuration FromMinutes(long minutes)
         {
-            const long minMinutes = MinSecDifference / SecsPerMinute;
-            const long maxMinutes = MaxSecDifference / SecsPerMinute;
-            ThrowHelper.CheckArgumentRange(nameof(minutes), minutes, minMinutes, maxMinutes);
+            const long MIN_MINUTES = MinSecDifference / SecsPerMinute;
+            const long MAX_MINUTES = MaxSecDifference / SecsPerMinute;
+            ThrowHelper.CheckArgumentRange(nameof(minutes), minutes, MIN_MINUTES, MAX_MINUTES);
 
             return new GameClockDuration(minutes * SecsPerMinute);
         }
@@ -305,9 +305,7 @@ namespace GTA.Chrono
         /// </exception>
         public static GameClockDuration FromSeconds(long seconds)
         {
-            const long minSeconds = MinSecDifference;
-            const long maxSeconds = MaxSecDifference;
-            ThrowHelper.CheckArgumentRange(nameof(seconds), seconds, minSeconds, maxSeconds);
+            ThrowHelper.CheckArgumentRange(nameof(seconds), seconds, MinSecDifference, MaxSecDifference);
 
             return new GameClockDuration(seconds);
         }
@@ -622,9 +620,9 @@ namespace GTA.Chrono
             {
                 // large enough for any standard string format for `GameClockDuration` (e.g. "-1568704592609:23:59:59"
                 // for the min value)
-                const int destSize = 24;
-                char* dest = stackalloc char[destSize];
-                TryFormatStandard(this, dest, destSize, out int charsWritten);
+                const int DEST_SIZE = 24;
+                char* dest = stackalloc char[DEST_SIZE];
+                TryFormatStandard(this, dest, DEST_SIZE, out int charsWritten);
 
                 return new string(dest, 0, charsWritten);
             }

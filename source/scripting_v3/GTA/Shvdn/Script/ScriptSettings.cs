@@ -19,11 +19,12 @@ namespace GTA
     public sealed class ScriptSettings
     {
         #region Fields
-        readonly string _fileName;
-        Dictionary<string, Dictionary<string, List<string>>> _values = new(StringComparer.OrdinalIgnoreCase);
+
+        private readonly string _fileName;
+        private Dictionary<string, Dictionary<string, List<string>>> _values = new(StringComparer.OrdinalIgnoreCase);
         #endregion
 
-        ScriptSettings(string fileName)
+        private ScriptSettings(string fileName)
         {
             _fileName = fileName;
         }
@@ -73,7 +74,8 @@ namespace GTA
                         tempSectionName = line.Substring(1, line.IndexOf("]", StringComparison.Ordinal) - 1).Trim();
                         continue;
                     }
-                    else if (line.Contains("="))
+
+                    if (line.Contains("="))
                     {
                         int index = line.IndexOf("=", StringComparison.Ordinal);
                         string key = line.Substring(0, index).Trim();

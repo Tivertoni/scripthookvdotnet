@@ -83,7 +83,7 @@ namespace GTA
         public int Alpha
         {
             get => Function.Call<int>(Hash.GET_BLIP_ALPHA, Handle);
-            set => Function.Call(Hash.SET_BLIP_ALPHA, Handle, (int)value);
+            set => Function.Call(Hash.SET_BLIP_ALPHA, Handle, value);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace GTA
                     _ => 0x5B
                 };
 
-                int returnValue = (int)SHVDN.MemDataMarshal.ReadByte(address + offset);
+                int returnValue = SHVDN.MemDataMarshal.ReadByte(address + offset);
 
                 // the game does not show a number label on the blip if the value is between 0x80 to 0xFF
                 if ((returnValue & 0x80) != 0)
@@ -332,7 +332,7 @@ namespace GTA
                 else
                 {
                     int offset = gameVersion >= VersionConstsForGameVersion.v1_0_463_1 ? 0x58 : 0x54;
-                    return (float)SHVDN.MemDataMarshal.ReadInt16(address + offset);
+                    return SHVDN.MemDataMarshal.ReadInt16(address + offset);
                 }
             }
             set
@@ -355,11 +355,9 @@ namespace GTA
                     SHVDN.MemDataMarshal.WriteFloat(address + 0x58, valueNormalized);
                     return;
                 }
-                else
-                {
-                    int offset = gameVersion >= VersionConstsForGameVersion.v1_0_463_1 ? 0x58 : 0x54;
-                    SHVDN.MemDataMarshal.WriteInt16(address + offset, (short)valueNormalized);
-                }
+
+                int offset = gameVersion >= VersionConstsForGameVersion.v1_0_463_1 ? 0x58 : 0x54;
+                SHVDN.MemDataMarshal.WriteInt16(address + offset, (short)valueNormalized);
             }
         }
 

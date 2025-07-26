@@ -13,13 +13,14 @@ namespace GTA
     public sealed class WeaponCollection : IEnumerable<Weapon>, IEnumerable
     {
         #region Fields
-        readonly Ped owner;
-        readonly Dictionary<WeaponHash, Weapon> weapons = new();
+
+        private readonly Ped _owner;
+        private readonly Dictionary<WeaponHash, Weapon> _weapons = new();
         #endregion
 
         internal WeaponCollection(Ped owner)
         {
-            this.owner = owner;
+            this._owner = owner;
         }
 
         /// <summary>
@@ -34,18 +35,18 @@ namespace GTA
         {
             get
             {
-                if (weapons.TryGetValue(hash, out Weapon weapon))
+                if (_weapons.TryGetValue(hash, out Weapon weapon))
                 {
                     return weapon;
                 }
 
-                if (!Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, owner.Handle, (uint)hash, 0))
+                if (!Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, _owner.Handle, (uint)hash, 0))
                 {
                     return null;
                 }
 
-                weapon = new Weapon(owner, hash);
-                weapons.Add(hash, weapon);
+                weapon = new Weapon(_owner, hash);
+                _weapons.Add(hash, weapon);
 
                 return weapon;
             }
@@ -62,7 +63,7 @@ namespace GTA
         {
             get
             {
-                IntPtr pedInventoryAddr = SHVDN.NativeMemory.Ped.GetCPedInventoryAddressFromPedHandle(owner.Handle);
+                IntPtr pedInventoryAddr = SHVDN.NativeMemory.Ped.GetCPedInventoryAddressFromPedHandle(_owner.Handle);
                 if (pedInventoryAddr == IntPtr.Zero)
                 {
                     return 0;
@@ -92,7 +93,7 @@ namespace GTA
         /// </summary>
         public WeaponHash[] GetAllWeaponHashes()
         {
-            return Array.ConvertAll(SHVDN.NativeMemory.Ped.GetAllWeaponHashesOfPedInventory(owner.Handle), x => (WeaponHash)x);
+            return Array.ConvertAll(SHVDN.NativeMemory.Ped.GetAllWeaponHashesOfPedInventory(_owner.Handle), x => (WeaponHash)x);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace GTA
         /// <returns><see langword="true"/> if the <see cref="WeaponCollection"/> contains a <see cref="WeaponHash"/> with the specified slot hash; otherwise, <see langword="false"/>.</returns>
         public bool TryGetWeaponHashBySlotHash(int slotHash, out WeaponHash weaponHash)
         {
-            bool foundWeaponHash = SHVDN.NativeMemory.Ped.TryGetWeaponHashInPedInventoryBySlotHash(owner.Handle, (uint)slotHash, out uint weaponHashUInt);
+            bool foundWeaponHash = SHVDN.NativeMemory.Ped.TryGetWeaponHashInPedInventoryBySlotHash(_owner.Handle, (uint)slotHash, out uint weaponHashUInt);
 
             weaponHash = (WeaponHash)weaponHashUInt;
             return foundWeaponHash;
@@ -132,13 +133,13 @@ namespace GTA
                 return false;
             }
 
-            if (weapons.TryGetValue(weaponHash, out weapon))
+            if (_weapons.TryGetValue(weaponHash, out weapon))
             {
                 return true;
             }
 
-            weapon = new Weapon(owner, weaponHash);
-            weapons.Add(weaponHash, weapon);
+            weapon = new Weapon(_owner, weaponHash);
+            _weapons.Add(weaponHash, weapon);
 
             return true;
         }
@@ -157,18 +158,18 @@ namespace GTA
                 int currentWeapon;
                 unsafe
                 {
-                    Function.Call(Hash.GET_CURRENT_PED_WEAPON, owner.Handle, &currentWeapon, true);
+                    Function.Call(Hash.GET_CURRENT_PED_WEAPON, _owner.Handle, &currentWeapon, true);
                 }
 
                 var hash = (WeaponHash)currentWeapon;
 
-                if (weapons.TryGetValue(hash, out Weapon current))
+                if (_weapons.TryGetValue(hash, out Weapon current))
                 {
                     return current;
                 }
 
-                var weapon = new Weapon(owner, hash);
-                weapons.Add(hash, weapon);
+                var weapon = new Weapon(_owner, hash);
+                _weapons.Add(hash, weapon);
 
                 return weapon;
             }
@@ -178,15 +179,15 @@ namespace GTA
         {
             get
             {
-                WeaponHash hash = Function.Call<WeaponHash>(Hash.GET_BEST_PED_WEAPON, owner.Handle, 0);
+                WeaponHash hash = Function.Call<WeaponHash>(Hash.GET_BEST_PED_WEAPON, _owner.Handle, 0);
 
-                if (weapons.TryGetValue(hash, out Weapon bestWeapon))
+                if (_weapons.TryGetValue(hash, out Weapon bestWeapon))
                 {
                     return bestWeapon;
                 }
 
-                var weapon = new Weapon(owner, (WeaponHash)hash);
-                weapons.Add(hash, weapon);
+                var weapon = new Weapon(_owner, hash);
+                _weapons.Add(hash, weapon);
 
                 return weapon;
             }
@@ -200,7 +201,7 @@ namespace GTA
         /// </remarks>
         public bool HasWeapon(WeaponHash weaponHash)
         {
-            return Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, owner.Handle, (uint)weaponHash);
+            return Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, _owner.Handle, (uint)weaponHash);
         }
         /// <summary>
         /// Gets the value that indicates whether the owner <see cref="Ped"/> has the weapon for <paramref name="weaponName"/>.
@@ -242,7 +243,7 @@ namespace GTA
                     return null;
                 }
 
-                return new Prop(Function.Call<int>(Hash.GET_CURRENT_PED_WEAPON_ENTITY_INDEX, owner.Handle));
+                return new Prop(Function.Call<int>(Hash.GET_CURRENT_PED_WEAPON_ENTITY_INDEX, _owner.Handle));
             }
         }
 
@@ -253,7 +254,7 @@ namespace GTA
                 return false;
             }
 
-            Function.Call(Hash.SET_CURRENT_PED_WEAPON, owner.Handle, (uint)weapon.Hash, true);
+            Function.Call(Hash.SET_CURRENT_PED_WEAPON, _owner.Handle, (uint)weapon.Hash, true);
 
             return true;
         }
@@ -269,12 +270,12 @@ namespace GTA
         /// <returns><see langword="true"/> if the ped has the weapon; otherwise, <see langword="false"/>.</returns>
         public bool Select(WeaponHash weaponHash, bool equipNow)
         {
-            if (!Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, owner.Handle, (uint)weaponHash))
+            if (!Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, _owner.Handle, (uint)weaponHash))
             {
                 return false;
             }
 
-            Function.Call(Hash.SET_CURRENT_PED_WEAPON, owner.Handle, (uint)weaponHash, equipNow);
+            Function.Call(Hash.SET_CURRENT_PED_WEAPON, _owner.Handle, (uint)weaponHash, equipNow);
 
             return true;
         }
@@ -299,10 +300,10 @@ namespace GTA
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter")]
         public Weapon Give(WeaponHash weaponHash, int ammoCount, bool equipNow, bool isAmmoLoaded)
         {
-            if (!weapons.TryGetValue(weaponHash, out Weapon weapon))
+            if (!_weapons.TryGetValue(weaponHash, out Weapon weapon))
             {
-                weapon = new Weapon(owner, weaponHash);
-                weapons.Add(weaponHash, weapon);
+                weapon = new Weapon(_owner, weaponHash);
+                _weapons.Add(weaponHash, weapon);
             }
 
             if (weapon.IsPresent)
@@ -315,7 +316,7 @@ namespace GTA
             else
             {
                 // Set the 4th argument to false for consistency. If 4th argument is set to true when 5th one is set to true, the ped will instantly select the added weapon in any case.
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, owner.Handle, (uint)weapon.Hash, ammoCount, false, equipNow);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, _owner.Handle, (uint)weapon.Hash, ammoCount, false, equipNow);
             }
 
             return weapon;
@@ -341,7 +342,7 @@ namespace GTA
         /// </summary>
         public void Drop()
         {
-            Function.Call(Hash.SET_PED_DROPS_WEAPON, owner.Handle);
+            Function.Call(Hash.SET_PED_DROPS_WEAPON, _owner.Handle);
         }
 
         /// <summary>
@@ -354,9 +355,9 @@ namespace GTA
         {
             WeaponHash hash = weapon.Hash;
 
-            if (weapons.ContainsKey(hash))
+            if (_weapons.ContainsKey(hash))
             {
-                weapons.Remove(hash);
+                _weapons.Remove(hash);
             }
 
             Remove(weapon.Hash);
@@ -364,7 +365,7 @@ namespace GTA
         /// <inheritdoc cref="Remove(Weapon)"/>
         public void Remove(WeaponHash weaponHash)
         {
-            Function.Call(Hash.REMOVE_WEAPON_FROM_PED, owner.Handle, (uint)weaponHash);
+            Function.Call(Hash.REMOVE_WEAPON_FROM_PED, _owner.Handle, (uint)weaponHash);
         }
         /// <inheritdoc cref="Remove(Weapon)"/>
         public void Remove(string weaponName) => Remove((WeaponHash)StringHash.AtStringHashUtf8(weaponName));
@@ -374,9 +375,9 @@ namespace GTA
         /// </summary>
         public void RemoveAll()
         {
-            Function.Call(Hash.REMOVE_ALL_PED_WEAPONS, owner.Handle, true);
+            Function.Call(Hash.REMOVE_ALL_PED_WEAPONS, _owner.Handle, true);
 
-            weapons.Clear();
+            _weapons.Clear();
         }
 
         public struct Enumerator : IEnumerator<Weapon>, IEnumerator
@@ -446,7 +447,7 @@ namespace GTA
             {
                 unsafe
                 {
-                    Ped owner = _weaponCollection.owner;
+                    Ped owner = _weaponCollection._owner;
                     IntPtr pedInventoryAddr = SHVDN.NativeMemory.Ped.GetCPedInventoryAddressFromPedHandle(owner.Handle);
                     if (pedInventoryAddr == IntPtr.Zero)
                     {
@@ -467,13 +468,13 @@ namespace GTA
                     }
 
                     var weaponHash = (WeaponHash)weaponInfo->nameHash;
-                    if (_weaponCollection.weapons.TryGetValue(weaponHash, out Weapon weapon))
+                    if (_weaponCollection._weapons.TryGetValue(weaponHash, out Weapon weapon))
                     {
                         return weapon;
                     }
 
                     weapon = new Weapon(owner, weaponHash);
-                    _weaponCollection.weapons.Add(weaponHash, weapon);
+                    _weaponCollection._weapons.Add(weaponHash, weapon);
 
                     return weapon;
                 }

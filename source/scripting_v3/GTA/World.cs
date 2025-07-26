@@ -19,7 +19,8 @@ namespace GTA
     public static class World
     {
         #region Fields
-        static readonly string[] s_weatherNames = {
+
+        private static readonly string[] s_weatherNames = {
             "EXTRASUNNY",
             "CLEAR",
             "CLOUDS",
@@ -37,10 +38,10 @@ namespace GTA
             "HALLOWEEN"
         };
 
-        static readonly GregorianCalendar s_calendar = new();
+        private static readonly GregorianCalendar s_calendar = new();
 
         // removes gang and animal ped models just like CREATE_RANDOM_PED does
-        static readonly Func<Model, bool> s_defaultPredicateForCreateRandomPed = (x => x.IsHumanPed && !x.IsGangPed);
+        private static readonly Func<Model, bool> s_defaultPredicateForCreateRandomPed = (x => x.IsHumanPed && !x.IsGangPed);
         #endregion
 
         #region Time & Day
@@ -1255,8 +1256,8 @@ namespace GTA
                 position.Z, heading, false, false));
 
             // Randomize variation but not ped props, just like `CREATE_RANDOM_PED` does.
-            const int race = 0; /* same as what `ePVRaceType::PV_RACE_UNIVERSAL` specifies */
-            Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, createdPed.Handle, race);
+            const int RACE = 0; /* same as what `ePVRaceType::PV_RACE_UNIVERSAL` specifies */
+            Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, createdPed.Handle, RACE);
 
             return createdPed;
         }

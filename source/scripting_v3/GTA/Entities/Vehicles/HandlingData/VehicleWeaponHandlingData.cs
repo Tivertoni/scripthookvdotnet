@@ -21,9 +21,9 @@ namespace GTA
     /// </remarks>
     public sealed class VehicleWeaponHandlingData : BaseSubHandlingData
     {
-        static readonly int s_elemCountForWeaponPropertyArrays;
+        private static readonly int s_elemCountForWeaponPropertyArrays;
         // Vehicle turret arrays can have up to 12 elements since b1180, but it looks like only 6 element can be actually used
-        static readonly int s_elemCountActuallyUsedForTurretPropertyArrays;
+        private static readonly int s_elemCountActuallyUsedForTurretPropertyArrays;
 
         static VehicleWeaponHandlingData()
         {
@@ -59,10 +59,10 @@ namespace GTA
 
                 var result = new VehicleWeaponHash[s_elemCountForWeaponPropertyArrays];
 
-                const int memberOffset = 0x8;
+                const int MEMBER_OFFSET = 0x8;
                 for (int i = 0; i < result.Length; i++)
                 {
-                    result[i] = (VehicleWeaponHash)SHVDN.MemDataMarshal.ReadInt32(MemoryAddress + memberOffset + i * 4);
+                    result[i] = (VehicleWeaponHash)SHVDN.MemDataMarshal.ReadInt32(MemoryAddress + MEMBER_OFFSET + i * 4);
                 }
 
                 return result;
@@ -90,10 +90,10 @@ namespace GTA
                     arrayToFill[i] = (int)value[i];
                 }
 
-                const int memberOffset = 0x8;
+                const int MEMBER_OFFSET = 0x8;
                 for (int i = 0; i < arrayToFill.Length; i++)
                 {
-                    SHVDN.MemDataMarshal.WriteInt32(MemoryAddress + memberOffset + i * 4, (int)arrayToFill[i]);
+                    SHVDN.MemDataMarshal.WriteInt32(MemoryAddress + MEMBER_OFFSET + i * 4, arrayToFill[i]);
                 }
             }
         }

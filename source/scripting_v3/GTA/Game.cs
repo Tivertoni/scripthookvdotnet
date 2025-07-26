@@ -15,8 +15,9 @@ namespace GTA
     public static class Game
     {
         #region Fields
-        static Player s_cachedPlayer = null;
-        static Ped s_cachedLocalPlayerPed = null;
+
+        private static Player s_cachedPlayer = null;
+        private static Ped s_cachedLocalPlayerPed = null;
 
         internal static readonly string[] s_radioNames = {
             "RADIO_01_CLASS_ROCK",

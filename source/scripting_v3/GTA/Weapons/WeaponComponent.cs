@@ -11,8 +11,9 @@ namespace GTA
     public sealed class WeaponComponent
     {
         #region Fields
-        readonly Ped _owner;
-        readonly Weapon _weapon;
+
+        private readonly Ped _owner;
+        private readonly Weapon _weapon;
         #endregion
 
         internal WeaponComponent(Ped owner, Weapon weapon, WeaponComponentHash component)
@@ -60,7 +61,7 @@ namespace GTA
             return weaponComponent.ComponentHash;
         }
 
-        static string GetComponentDisplayNameFromHash(WeaponHash hash, WeaponComponentHash component)
+        private static string GetComponentDisplayNameFromHash(WeaponHash hash, WeaponComponentHash component)
         {
             // Will be found in this switch statement if the hash is one of the weapon component hashes for singleplayer
             switch (component)
@@ -206,7 +207,7 @@ namespace GTA
             return "WCT_INVALID";
         }
 
-        static WeaponAttachmentPoint GetAttachmentPoint(WeaponHash hash, WeaponComponentHash componentHash)
+        private static WeaponAttachmentPoint GetAttachmentPoint(WeaponHash hash, WeaponComponentHash componentHash)
         {
             return (WeaponAttachmentPoint)SHVDN.NativeMemory.GetAttachmentPointHash((uint)hash, (uint)componentHash);
         }

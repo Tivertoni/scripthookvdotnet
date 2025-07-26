@@ -111,7 +111,7 @@ namespace GTA
         /// <summary>
         /// Gets the memory address of the matrix for this <see cref="Camera"/>.
         /// </summary>
-        IntPtr MatrixAddress
+        private IntPtr MatrixAddress
         {
             get
             {
@@ -279,10 +279,10 @@ namespace GTA
         {
             // The duration must be zero to guarantee that setting to the new cam frame params won't fail due to
             // the scripted cam not being active or the camera pool being full
-            const uint DurationNoInterpolation = 0;
+            const uint DURATION_NO_INTERPOLATION = 0;
             Function.Call(Hash.SET_CAM_PARAMS, Handle, position.X, position.Y, position.Z, rotation.X, rotation.Y,
                 rotation.Z,
-                fov, DurationNoInterpolation, (int)graphTypePos, (int)graphTypeRot, (int)rotOrder);
+                fov, DURATION_NO_INTERPOLATION, (int)graphTypePos, (int)graphTypeRot, (int)rotOrder);
         }
         /// <summary>
         /// Interpolates this <see cref="Camera"/> to a cam frame consisted of specified camera frame parameters.

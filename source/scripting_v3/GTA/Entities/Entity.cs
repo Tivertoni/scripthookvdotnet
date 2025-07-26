@@ -24,8 +24,9 @@ namespace GTA
     public abstract class Entity : PoolObject, ISpatial
     {
         #region Fields
-        EntityBoneCollection _bones;
-        EntityDamageRecordCollection _damageRecords;
+
+        private EntityBoneCollection _bones;
+        private EntityDamageRecordCollection _damageRecords;
         #endregion
 
         internal Entity(int handle) : base(handle)
@@ -120,7 +121,7 @@ namespace GTA
             IntPtr address = SHVDN.NativeMemory.GetEntityAddress(handle);
             if (address == IntPtr.Zero)
             {
-                return (EntityTypeInternal)0 /* ENTITY_TYPE_MASK_NOTHING */;
+                return 0 /* ENTITY_TYPE_MASK_NOTHING */;
             }
 
             return (EntityTypeInternal)SHVDN.MemDataMarshal.ReadByte(address + 0x28);
@@ -1217,8 +1218,8 @@ namespace GTA
             }
             set
             {
-                const bool doDeadCheck = false;
-                Function.Call(Hash.SET_ENTITY_LOAD_COLLISION_FLAG, Handle, value, doDeadCheck);
+                const bool DO_DEAD_CHECK = false;
+                Function.Call(Hash.SET_ENTITY_LOAD_COLLISION_FLAG, Handle, value, DO_DEAD_CHECK);
             }
         }
 

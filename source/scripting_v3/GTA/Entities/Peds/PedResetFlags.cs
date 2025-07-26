@@ -17,7 +17,8 @@ namespace GTA
     public sealed class PedResetFlags
     {
         #region Fields
-        readonly Ped _ped;
+
+        private readonly Ped _ped;
         #endregion
 
         internal PedResetFlags(Ped ped)
@@ -59,7 +60,7 @@ namespace GTA
                     return;
                 }
 
-                SHVDN.MemDataMarshal.WriteByte(address + NativeMemory.Ped.CPed__PedResetFlagsOffset, value);
+                MemDataMarshal.WriteByte(address + NativeMemory.Ped.CPed__PedResetFlagsOffset, value);
             }
         }
 
@@ -128,7 +129,7 @@ namespace GTA
                 }
 
                 int offset = (NativeMemory.Ped.CPed__PedResetFlagsOffset + 1);
-                SHVDN.MemDataMarshal.WriteByte(address + offset, value);
+                MemDataMarshal.WriteByte(address + offset, value);
             }
         }
 

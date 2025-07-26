@@ -468,16 +468,16 @@ namespace GTA
         /// </returns>
         public static new ProjectileRocket FromHandle(int handle)
         {
-            IntPtr address = SHVDN.NativeMemory.GetEntityAddress(handle);
+            IntPtr address = NativeMemory.GetEntityAddress(handle);
             if (address == IntPtr.Zero
-                || (EntityTypeInternal)SHVDN.MemDataMarshal.ReadByte(address + 0x28) != EntityTypeInternal.Object)
+                || (EntityTypeInternal)MemDataMarshal.ReadByte(address + 0x28) != EntityTypeInternal.Object)
             {
                 return null;
             }
 
             // `CObject::GetAsCProjectileRocket` should return the same address if the vfunc is overridden by
             // `CProjectileRocket`'s implementation and it should return false otherwise
-            return SHVDN.NativeMemory.GetAsCProjectileRocket(address) != address ? null : new ProjectileRocket(handle);
+            return NativeMemory.GetAsCProjectileRocket(address) != address ? null : new ProjectileRocket(handle);
         }
 
         private bool GetProjectileRocketFlag(byte bit)

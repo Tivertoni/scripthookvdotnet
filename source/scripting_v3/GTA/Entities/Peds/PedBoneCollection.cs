@@ -15,27 +15,28 @@ namespace GTA
         public new sealed class Enumerator : IEnumerator<PedBone>
         {
             #region Fields
-            readonly PedBoneCollection collection;
-            int currentIndex = -1; // Skip the CORE bone index(-1)
+
+            private readonly PedBoneCollection _collection;
+            private int _currentIndex = -1; // Skip the CORE bone index(-1)
             #endregion
 
             public Enumerator(PedBoneCollection collection)
             {
-                this.collection = collection;
+                this._collection = collection;
             }
 
-            public PedBone Current => collection[currentIndex];
+            public PedBone Current => _collection[_currentIndex];
 
-            object IEnumerator.Current => collection[currentIndex];
+            object IEnumerator.Current => _collection[_currentIndex];
 
             public void Reset()
             {
-                currentIndex = -1;
+                _currentIndex = -1;
             }
 
             public bool MoveNext()
             {
-                return ++currentIndex < collection.Count;
+                return ++_currentIndex < _collection.Count;
             }
 
             void IDisposable.Dispose()

@@ -141,8 +141,8 @@ namespace GTA.Chrono
         private static unsafe bool FormatStringForDateWithMoreThan4DigitYear(GameClockDate date, char* dest,
             int destLengthInElemCount, out int charsWritten)
         {
-            const int MinDigitsForYearPart = 4;
-            const int RequiredStrLenWithoutYearPart = 6;
+            const int MIN_DIGITS_FOR_YEAR_PART = 4;
+            const int REQUIRED_STR_LEN_WITHOUT_YEAR_PART = 6;
 
             int year = date.Year;
             bool yearIsNegative = year < 0;
@@ -150,10 +150,10 @@ namespace GTA.Chrono
             // but negating and then casting int.MinValue to uint doesn't cause any problems for `WriteDigits`.
             uint absYear = (uint)(yearIsNegative ? -year : year);
 
-            int yearDigitCount = System.Math.Max(FormattingHelpers.CountDigits(absYear), MinDigitsForYearPart);
+            int yearDigitCount = System.Math.Max(FormattingHelpers.CountDigits(absYear), MIN_DIGITS_FOR_YEAR_PART);
             int requiredLen = yearIsNegative
-                ? yearDigitCount + RequiredStrLenWithoutYearPart + 1
-                : yearDigitCount + RequiredStrLenWithoutYearPart;
+                ? yearDigitCount + REQUIRED_STR_LEN_WITHOUT_YEAR_PART + 1
+                : yearDigitCount + REQUIRED_STR_LEN_WITHOUT_YEAR_PART;
 
             if (destLengthInElemCount < requiredLen)
             {

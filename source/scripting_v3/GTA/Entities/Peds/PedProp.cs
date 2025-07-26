@@ -12,7 +12,8 @@ namespace GTA
     public sealed class PedProp : IPedVariation
     {
         #region Fields
-        readonly Ped _ped;
+
+        private readonly Ped _ped;
         #endregion
 
         internal PedProp(Ped ped, PedPropType propId)
@@ -75,9 +76,9 @@ namespace GTA
                 return false;
             }
 
-            const int SyncWithBlendParamUnused = 0;
+            const int SYNC_WITH_BLEND_PARAM_UNUSED = 0;
             Function.Call(Hash.SET_PED_PROP_INDEX, _ped.Handle, (int)AnchorPoint, index - 1, textureIndex,
-                SyncWithBlendParamUnused);
+                SYNC_WITH_BLEND_PARAM_UNUSED);
             return true;
         }
 

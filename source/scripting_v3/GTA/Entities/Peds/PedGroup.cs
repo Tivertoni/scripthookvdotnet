@@ -15,19 +15,20 @@ namespace GTA
         public sealed class Enumerator : IEnumerator<Ped>
         {
             #region Fields
-            readonly PedGroup collection;
-            Ped current;
-            int currentIndex = -2;
+
+            private readonly PedGroup _collection;
+            private Ped _current;
+            private int _currentIndex = -2;
             #endregion
 
             public Enumerator(PedGroup group)
             {
-                collection = group;
+                _collection = group;
             }
 
-            public Ped Current => current;
+            public Ped Current => _current;
 
-            object IEnumerator.Current => current;
+            object IEnumerator.Current => _current;
 
             public void Reset()
             {
@@ -35,11 +36,11 @@ namespace GTA
 
             public bool MoveNext()
             {
-                if (currentIndex++ < (collection.MemberCount - 1))
+                if (_currentIndex++ < (_collection.MemberCount - 1))
                 {
-                    current = currentIndex < 0 ? collection.Leader : collection.GetMember(currentIndex);
+                    _current = _currentIndex < 0 ? _collection.Leader : _collection.GetMember(_currentIndex);
 
-                    if (current != null)
+                    if (_current != null)
                     {
                         return true;
                     }

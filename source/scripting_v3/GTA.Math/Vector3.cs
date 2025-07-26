@@ -64,8 +64,7 @@ namespace GTA.Math
         [FieldOffset(8)]
         public float Z;
 
-        [FieldOffset(12)]
-        float _padding;
+        [FieldOffset(12)] private float _padding;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3"/> class.

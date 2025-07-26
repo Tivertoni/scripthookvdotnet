@@ -155,8 +155,8 @@ namespace GTA
             // The formatted game version (such as "v1.0.335.2") string won't take more than 16 characters
             // on condition that the build number (the third number) is up to 65535 and the other 3 numbers
             // is between 0 and 9.
-            const int SbCapacity = 16;
-            StringBuilder sb = new StringBuilder(SbCapacity);
+            const int SB_CAPACITY = 16;
+            var sb = new StringBuilder(SB_CAPACITY);
             sb.Append("v");
             sb.Append(minSupportedGameVersion.Major);
             sb.Append(".");

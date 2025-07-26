@@ -140,7 +140,7 @@ namespace GTA.Chrono
 
         internal MonthDayFlags MonthDayFlags => _ordFlags.ToMonthDayFlags();
 
-        static GameClockDate? FromOrdinalAndFlags(int year, int ordinal, YearFlags flags)
+        private static GameClockDate? FromOrdinalAndFlags(int year, int ordinal, YearFlags flags)
         {
             return OrdFlags.New(ordinal, flags) switch
             {
@@ -149,7 +149,7 @@ namespace GTA.Chrono
             };
         }
 
-        static GameClockDate? FromMdf(int year, MonthDayFlags mdf)
+        private static GameClockDate? FromMdf(int year, MonthDayFlags mdf)
         {
             OrdFlags? of = mdf.ToOrdFlags();
 
@@ -161,7 +161,7 @@ namespace GTA.Chrono
             return null;
         }
 
-        static GameClockDate FromMdfUnchecked(int year, MonthDayFlags mdf)
+        private static GameClockDate FromMdfUnchecked(int year, MonthDayFlags mdf)
             => new GameClockDate(year, mdf.ToOrdFlags().GetValueOrDefault());
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace GTA.Chrono
         {
             // dividing int64 secs by a float64 value may result in unintended rounding errors when converting secs
             // into float64.
-            long wholeDays = (long)duration.WholeDays;
+            long wholeDays = duration.WholeDays;
             long newOrdinal = DayOfYear + wholeDays;
 
             if (newOrdinal is > 0 and <= 365)
@@ -845,8 +845,8 @@ namespace GTA.Chrono
             DivModFloor(year1, 400, out int year1Div400, out int year1Mod400);
             DivModFloor(year2, 400, out int year2Div400, out int year2Mod400);
 
-            long cycle1 = (long)Internals.YearOrdinalToDayCycle(year1Mod400, (int)_ordFlags.Ordinal);
-            long cycle2 = (long)Internals.YearOrdinalToDayCycle(year2Mod400, (int)value._ordFlags.Ordinal);
+            long cycle1 = Internals.YearOrdinalToDayCycle(year1Mod400, (int)_ordFlags.Ordinal);
+            long cycle2 = Internals.YearOrdinalToDayCycle(year2Mod400, (int)value._ordFlags.Ordinal);
             return GameClockDuration.FromDays(((long)year1Div400 - year2Div400) * 146_097 + (cycle1 - cycle2));
         }
 
@@ -924,14 +924,11 @@ namespace GTA.Chrono
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe string ToStringInternal()
         {
-            unsafe
-            {
-                // this is the minimum number that is large enough to contain any date string and is multiple of 4
-                const int bufferLen = 20;
-                char* buffer = stackalloc char[bufferLen];
-                GameClockDateTimeFormat.TryFormatDateS(this, buffer, bufferLen, out int written);
-                return new string(buffer, 0, written);
-            }
+            // this is the minimum number that is large enough to contain any date string and is multiple of 4
+            const int bufferLen = 20;
+            char* buffer = stackalloc char[bufferLen];
+            GameClockDateTimeFormat.TryFormatDateS(this, buffer, bufferLen, out int written);
+            return new string(buffer, 0, written);
         }
 
         /// <summary>

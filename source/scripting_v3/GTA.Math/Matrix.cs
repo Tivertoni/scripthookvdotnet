@@ -310,7 +310,7 @@ namespace GTA.Math
             }
         }
 
-        const float F32Epsilon = 1.1920929e-7f;
+        private const float F32Epsilon = 1.1920929e-7f;
 
         /// <summary>Gets the origin of the coordinate system.</summary>
         /// <returns>The origin of the coordinate system.</returns>
@@ -379,7 +379,7 @@ namespace GTA.Math
                 (M14 * (((M21 * temp3) - (M22 * temp5)) + (M23 * temp6))));
         }
 
-        readonly float Det3x3(float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33)
+        private readonly float Det3x3(float m11, float m12, float m13, float m21, float m22, float m23, float m31, float m32, float m33)
         {
             return m11 * (m22 * m33 - m23 * m32) - m12 * (m21 * m33 - m23 * m31) + m13 * (m21 * m32 - m22 * m31);
         }

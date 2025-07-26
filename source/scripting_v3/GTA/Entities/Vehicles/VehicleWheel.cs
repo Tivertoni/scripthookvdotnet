@@ -17,7 +17,8 @@ namespace GTA
     public sealed class VehicleWheel
     {
         #region Fields
-        IntPtr _cachedAddress;
+
+        private IntPtr _cachedAddress;
 
         internal static readonly VehicleWheelBoneId[] vehicleWheelBoneIndexTableForNatives = {
             VehicleWheelBoneId.WheelLeftFront,

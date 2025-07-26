@@ -59,13 +59,13 @@ namespace GTA.Chrono
             bool lessThan = value < powerOf10;
             unsafe
             {
-                // while arbitrary bools may be non-0/1, comparison operators are expected to return 0/1
+                // while arbitrary booleans may be non-0/1, comparison operators are expected to return 0/1
                 return (int)(index - *(byte*)&lessThan);
             }
         }
 
         // Algorithm based on https://lemire.me/blog/2021/06/03/computing-the-number-of-digits-of-an-integer-even-faster.
-        private static readonly long[] FastCountDigitTable = new long[32]
+        private static readonly long[] s_fastCountDigitTable = new long[32]
         {
             4294967296,
             8589934582,
@@ -104,9 +104,9 @@ namespace GTA.Chrono
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static int CountDigits(uint value)
         {
-            Debug.Assert(FastCountDigitTable.Length == 32, "Every result of CountDigits(value) needs a long entry in the table.");
+            Debug.Assert(s_fastCountDigitTable.Length == 32, "Every result of CountDigits(value) needs a long entry in the table.");
 
-            long tableValue = FastCountDigitTable[BitOperations.Log2(value)];
+            long tableValue = s_fastCountDigitTable[BitOperations.Log2(value)];
             return (int)((value + tableValue) >> 32);
         }
 

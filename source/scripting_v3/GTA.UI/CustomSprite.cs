@@ -97,11 +97,12 @@ namespace GTA.UI
         }
 
         #region Fields
-        int _id;
-        static int s_globalLevel, s_globalLastDrawFrame;
-        static Dictionary<string, int> s_textures = new();
-        static Dictionary<int, int> s_lastDraw = new();
-        static Dictionary<int, int> s_indexes = new();
+
+        private int _id;
+        private static int s_globalLevel, s_globalLastDrawFrame;
+        private static Dictionary<string, int> s_textures = new();
+        private static Dictionary<int, int> s_lastDraw = new();
+        private static Dictionary<int, int> s_indexes = new();
         #endregion
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace GTA.UI
             }
         }
 
-        void InternalDraw(SizeF offset, float screenWidth, float screenHeight)
+        private void InternalDraw(SizeF offset, float screenWidth, float screenHeight)
         {
             if (!Enabled)
             {

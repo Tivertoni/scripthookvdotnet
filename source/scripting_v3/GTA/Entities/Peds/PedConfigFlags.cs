@@ -16,7 +16,8 @@ namespace GTA
     public sealed class PedConfigFlags
     {
         #region Fields
-        readonly Ped _ped;
+
+        private readonly Ped _ped;
         #endregion
 
         internal PedConfigFlags(Ped ped)
@@ -184,13 +185,13 @@ namespace GTA
                 // 15).
                 if (value == VehicleSeat.Any)
                 {
-                    const int PassengerIndexToResetToDefault = 30;
-                    valToPass = PassengerIndexToResetToDefault;
+                    const int PASSENGER_INDEX_TO_RESET_TO_DEFAULT = 30;
+                    valToPass = PASSENGER_INDEX_TO_RESET_TO_DEFAULT;
                 }
                 else if (value == VehicleSeat.Driver)
                 {
-                    const int PassengerIndexToSetToDriver = 31;
-                    valToPass = PassengerIndexToSetToDriver;
+                    const int PASSENGER_INDEX_TO_SET_TO_DRIVER = 31;
+                    valToPass = PASSENGER_INDEX_TO_SET_TO_DRIVER;
                 }
 
                 Function.Call(Hash.SET_PED_GROUP_MEMBER_PASSENGER_INDEX, _ped.Handle, valToPass);               

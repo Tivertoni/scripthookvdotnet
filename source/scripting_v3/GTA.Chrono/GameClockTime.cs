@@ -297,14 +297,11 @@ namespace GTA.Chrono
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe string ToStringInternal()
         {
-            unsafe
-            {
-                // this is the minimum number that is large enough to contain any time string
-                const int bufferLen = 8;
-                char* buffer = stackalloc char[bufferLen];
-                GameClockDateTimeFormat.TryFormatTimeS(this, buffer, bufferLen, out int written);
-                return new string(buffer, 0, written);
-            }
+            // this is the minimum number that is large enough to contain any time string
+            const int bufferLen = 8;
+            char* buffer = stackalloc char[bufferLen];
+            GameClockDateTimeFormat.TryFormatTimeS(this, buffer, bufferLen, out int written);
+            return new string(buffer, 0, written);
         }
 
         /// <summary>

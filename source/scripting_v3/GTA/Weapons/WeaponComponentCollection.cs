@@ -13,11 +13,12 @@ namespace GTA
     public sealed class WeaponComponentCollection
     {
         #region Fields
-        readonly Ped _owner;
-        readonly Weapon _weapon;
-        readonly Dictionary<WeaponComponentHash, WeaponComponent> _weaponComponents = new();
-        readonly WeaponComponentHash[] _components;
-        static readonly WeaponComponent _invalidComponent = new(null, null, WeaponComponentHash.Invalid);
+
+        private readonly Ped _owner;
+        private readonly Weapon _weapon;
+        private readonly Dictionary<WeaponComponentHash, WeaponComponent> _weaponComponents = new();
+        private readonly WeaponComponentHash[] _components;
+        private static readonly WeaponComponent _invalidComponent = new(null, null, WeaponComponentHash.Invalid);
         #endregion
 
         internal WeaponComponentCollection(Ped owner, Weapon weapon)
@@ -378,7 +379,7 @@ namespace GTA
         /// Gets all the compatible weapon component hashes for the specified weapon hash.
         /// </summary>
         /// <param name="hash">The weapon hash.</param>
-        static WeaponComponentHash[] GetComponentsFromHash(WeaponHash hash)
+        private static WeaponComponentHash[] GetComponentsFromHash(WeaponHash hash)
         {
             return SHVDN.NativeMemory.GetAllCompatibleWeaponComponentHashes((uint)hash).Select(x => (WeaponComponentHash)x).ToArray();
         }

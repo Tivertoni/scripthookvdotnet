@@ -15,15 +15,16 @@ namespace GTA
     public sealed class Ped : Entity
     {
         #region Fields
-        TaskInvoker _tasks;
-        Euphoria _euphoria;
-        WeaponCollection _weapons;
-        Style _style;
-        PedBoneCollection _pedBones;
-        PedConfigFlags _pedConfigFlags;
-        PedResetFlags _pedResetFlags;
 
-        PedMoveNetworkTaskInterface _moveNetworkInterface;
+        private TaskInvoker _tasks;
+        private Euphoria _euphoria;
+        private WeaponCollection _weapons;
+        private Style _style;
+        private PedBoneCollection _pedBones;
+        private PedConfigFlags _pedConfigFlags;
+        private PedResetFlags _pedResetFlags;
+
+        private PedMoveNetworkTaskInterface _moveNetworkInterface;
 
         internal static readonly string[] _speechModifierNames = {
             "SPEECH_PARAMS_STANDARD",
@@ -122,10 +123,10 @@ namespace GTA
         {
             // These 2 arguments are specified as the default arguments in the native header, and they do not have
             // any effect if the game is not networked.
-            const bool registerAsNetworkObject = true;
-            const bool scriptHostObject = true;
+            const bool REGISTER_AS_NETWORK_OBJECT = true;
+            const bool SCRIPT_HOST_OBJECT = true;
 
-            int handle = Function.Call<int>(Hash.CLONE_PED, Handle, registerAsNetworkObject, scriptHostObject,
+            int handle = Function.Call<int>(Hash.CLONE_PED, Handle, REGISTER_AS_NETWORK_OBJECT, SCRIPT_HOST_OBJECT,
                 linkBlends);
 
             return MakePedInstIfHandleIsNotZero(handle);
@@ -142,12 +143,12 @@ namespace GTA
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Ped Clone(float heading = 0.0f)
         {
-            const bool registerAsNetworkObject = true;
-            const bool scriptHostObject = true;
+            const bool REGISTER_AS_NETWORK_OBJECT = true;
+            const bool SCRIPT_HOST_OBJECT = true;
 
             // Do not return null even if the native function returns 0, this overload always returns a new `Ped`
             // instance in v3.6.0 and earlier.
-            return new Ped(Function.Call<int>(Hash.CLONE_PED, Handle, registerAsNetworkObject, scriptHostObject,
+            return new Ped(Function.Call<int>(Hash.CLONE_PED, Handle, REGISTER_AS_NETWORK_OBJECT, SCRIPT_HOST_OBJECT,
                 false));
         }
 
@@ -177,10 +178,10 @@ namespace GTA
             GameVersionNotSupportedException.ThrowIfNotSupported(VersionConstsForGameVersion.v1_0_463_1, nameof(Ped),
                 nameof(CloneAlt));
 
-            const bool registerAsNetworkObject = true;
-            const bool scriptHostObject = true;
+            const bool REGISTER_AS_NETWORK_OBJECT = true;
+            const bool SCRIPT_HOST_OBJECT = true;
 
-            int handle = Function.Call<int>(Hash.CLONE_PED_ALT, Handle, registerAsNetworkObject, scriptHostObject,
+            int handle = Function.Call<int>(Hash.CLONE_PED_ALT, Handle, REGISTER_AS_NETWORK_OBJECT, SCRIPT_HOST_OBJECT,
                 linkBlends, cloneCompressedDamage);
 
             return MakePedInstIfHandleIsNotZero(handle);
@@ -1867,7 +1868,7 @@ namespace GTA
                 }
 
                 int seatIndex = SHVDN.MemDataMarshal.ReadByte(address + SHVDN.NativeMemory.Ped.AttachCarSeatIndexOffset);
-                return (seatIndex >= 0 && IsInVehicle()) ? (VehicleSeat)(seatIndex - 1) : VehicleSeat.None;
+                return IsInVehicle() ? (VehicleSeat)(seatIndex - 1) : VehicleSeat.None;
             }
         }
 

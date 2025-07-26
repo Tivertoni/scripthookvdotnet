@@ -98,7 +98,7 @@ namespace GTA
         public bool IsValid => Handle != 0;
         public bool IsLoaded => Function.Call<bool>(Hash.HAS_SCALEFORM_MOVIE_LOADED, Handle);
 
-        void CallFunctionHead(string function, params object[] arguments)
+        private void CallFunctionHead(string function, params object[] arguments)
         {
             Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, function);
 
@@ -126,7 +126,7 @@ namespace GTA
                         Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_FLOAT, (float)argDouble);
                         break;
                     case bool argBool:
-                        Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL, (bool)argBool);
+                        Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL, argBool);
                         break;
                     case ScaleformArgumentTXD argTxd:
                         Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_TEXTURE_NAME_STRING, argTxd._txd);

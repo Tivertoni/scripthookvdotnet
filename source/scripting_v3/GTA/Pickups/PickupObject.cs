@@ -30,12 +30,12 @@ namespace GTA
                 return null;
             }
 
-            // We have to use some of Rockstar's RTTI info to ensure if this CObject is CPickup
+            // We have to use some of R*'s RTTI info to ensure if this CObject is CPickup
             // Native functions that take a pickup object handle verify this in the same way
             // (fetches an address from the associated handle then tests if the class id hash
             // is the same as 0xAD2BCC1A (the joaat hash of the name "CPickup")
-            const uint cPickupNameHash = 0xAD2BCC1A;
-            if (SHVDN.NativeMemory.GetRageClassId(address) != cPickupNameHash)
+            const uint C_PICKUP_NAME_HASH = 0xAD2BCC1A;
+            if (SHVDN.NativeMemory.GetRageClassId(address) != C_PICKUP_NAME_HASH)
             {
                 return null;
             }
