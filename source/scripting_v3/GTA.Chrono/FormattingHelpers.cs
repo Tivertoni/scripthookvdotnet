@@ -50,7 +50,7 @@ namespace GTA.Chrono
         public static int CountDigits(ulong value)
         {
             Debug.Assert(Log2ToPow10ForU64.Length == 64);
-            var index = (uint)Log2ToPow10ForU64[BitOperations.Log2(value)];
+            uint index = (uint)Log2ToPow10ForU64[BitOperations.Log2(value)];
 
             Debug.Assert((index + 1) <= PowersOf10.Length);
             ulong powerOf10 = PowersOf10[BitOperations.Log2(index)];

@@ -31,7 +31,7 @@ namespace GTA
             // a GUID
             if (cEntityHandleArg != 0)
             {
-                Entity cPhysicalHandle = Entity.FromHandle(cEntityHandleArg);
+                var cPhysicalHandle = Entity.FromHandle(cEntityHandleArg);
                 if (cPhysicalHandle != null)
                 {
                     HitEntity = cPhysicalHandle;

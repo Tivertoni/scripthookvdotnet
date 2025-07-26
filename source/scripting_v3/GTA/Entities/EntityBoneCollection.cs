@@ -23,7 +23,7 @@ namespace GTA
 
             public Enumerator(EntityBoneCollection collection)
             {
-                this._collection = collection;
+                _collection = collection;
             }
 
             public EntityBone Current => _collection[_currentIndex];

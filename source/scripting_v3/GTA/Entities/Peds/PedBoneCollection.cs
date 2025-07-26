@@ -22,7 +22,7 @@ namespace GTA
 
             public Enumerator(PedBoneCollection collection)
             {
-                this._collection = collection;
+                _collection = collection;
             }
 
             public PedBone Current => _collection[_currentIndex];

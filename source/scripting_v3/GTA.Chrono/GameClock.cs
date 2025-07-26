@@ -75,7 +75,7 @@ namespace GTA.Chrono
                     dayDiffForNormalizedDate += NormalizeTime(ref second, ref minute, ref hour);
                 }
 
-                GameClockTime time = GameClockTime.FromHms(hour, minute, second);
+                var time = GameClockTime.FromHms(hour, minute, second);
 
                 int year = Year;
                 int day = Day + dayDiffForNormalizedDate;

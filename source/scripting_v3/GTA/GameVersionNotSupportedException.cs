@@ -48,8 +48,8 @@ namespace GTA
         public Version MinimumSupportedGameFileVersion { get; }
 
         private Dictionary<Version, GameVersion> _supportedGameVersionEnumMaps
-            = new Dictionary<Version, GameVersion>
-        {
+            = new()
+            {
             { VersionConstsForGameVersion.v1_0_335_2, GameVersion.v1_0_335_2_Steam },
             { VersionConstsForGameVersion.v1_0_350_1, GameVersion.v1_0_350_1_Steam },
             { VersionConstsForGameVersion.v1_0_350_2, GameVersion.v1_0_350_2_NoSteam },

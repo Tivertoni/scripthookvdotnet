@@ -758,7 +758,7 @@ namespace GTA.Math
         /// <returns><see langword="true" /> if the current instance is equal to the specified object; <see langword="false" /> otherwise.</returns>
         public readonly bool Equals(Vector3 other) => (X == other.X && Y == other.Y && Z == other.Z);
 
-        internal readonly SHVDN.FVector3 ToInternalFVector3() => new SHVDN.FVector3(X, Y, Z);
+        internal readonly SHVDN.FVector3 ToInternalFVector3() => new(X, Y, Z);
     }
 
     // For natives that require pointers to vectors and are called internally in the scripting section.

@@ -469,7 +469,7 @@ namespace GTA.Math
         /// The result will be a bit inaccurate than <see cref="Inverse()"/>.
         /// <para>
         /// Identical to how <c>rage::Matrix44::FastInverse(rage::Matrix44 *this, rage::Matrix44 const &amp;m)</c>
-        /// calculates, where the prameter <c>m</c> is the source matrix and the parameter <c>this</c> is the
+        /// calculates, where the parameter <c>m</c> is the source matrix and the parameter <c>this</c> is the
         /// destination matrix.
         /// </para>
         /// </remarks>

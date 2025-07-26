@@ -20,7 +20,7 @@ namespace GTA
 
         internal WeaponCollection(Ped owner)
         {
-            this._owner = owner;
+            _owner = owner;
         }
 
         /// <summary>

@@ -75,7 +75,7 @@ namespace GTA
             var props = new List<PedProp>();
             for (int i = 0; i < NumPedProps; i++)
             {
-                PedPropAnchorPoint anchorPoint = (PedPropAnchorPoint)i;
+                var anchorPoint = (PedPropAnchorPoint)i;
                 PedProp pedProp = this[anchorPoint];
                 if (pedProp.HasVariations)
                 {
@@ -91,7 +91,7 @@ namespace GTA
             var components = new List<PedComponent>();
             for (int i = 0; i < NumPedComponent; i++)
             {
-                PedComponentType componentType = (PedComponentType)i;
+                var componentType = (PedComponentType)i;
                 PedComponent component = this[componentType];
                 if (component.HasVariations)
                 {

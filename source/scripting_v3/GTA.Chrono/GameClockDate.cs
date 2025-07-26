@@ -144,25 +144,22 @@ namespace GTA.Chrono
         {
             return OrdFlags.New(ordinal, flags) switch
             {
-                OrdFlags of => new GameClockDate(year, of),
+                { } of => new GameClockDate(year, of),
                 _ => null
             };
         }
 
         private static GameClockDate? FromMdf(int year, MonthDayFlags mdf)
         {
-            OrdFlags? of = mdf.ToOrdFlags();
-
-            if (of is OrdFlags ofNonNull)
+            return mdf.ToOrdFlags() switch
             {
-                return new GameClockDate(year, ofNonNull);
-            }
-
-            return null;
+                { } of => new GameClockDate(year, of),
+                _ => null
+            };
         }
 
-        private static GameClockDate FromMdfUnchecked(int year, MonthDayFlags mdf)
-            => new GameClockDate(year, mdf.ToOrdFlags().GetValueOrDefault());
+        private static GameClockDate FromMdfUnchecked(int year, MonthDayFlags mdf) =>
+            new(year, mdf.ToOrdFlags().GetValueOrDefault());
 
         /// <summary>
         /// Makes a new <see cref="GameClockDateTime"/> from the current date and given <see cref="GameClockTime"/>.
@@ -175,7 +172,7 @@ namespace GTA.Chrono
         /// </summary>
         public GameClockDateTime AndHms(int hour, int minute, int second)
         {
-            GameClockTime time = GameClockTime.FromHms(hour, minute, second);
+            var time = GameClockTime.FromHms(hour, minute, second);
             return new GameClockDateTime(this, time);
         }
 
@@ -234,7 +231,7 @@ namespace GTA.Chrono
         /// </returns>
         public static bool TryFromYmd(int year, int month, int day, out GameClockDate date)
         {
-            YearFlags flags = YearFlags.FromYear(year);
+            var flags = YearFlags.FromYear(year);
             MonthDayFlags? mdf = MonthDayFlags.New(month, day, flags);
             if (mdf == null)
             {
@@ -285,7 +282,7 @@ namespace GTA.Chrono
         /// </returns>
         public static bool TryFromOrdinalDate(int year, int ordinal, out GameClockDate date)
         {
-            YearFlags flags = YearFlags.FromYear(year);
+            var flags = YearFlags.FromYear(year);
 
             GameClockDate? dateNullable = FromOrdinalAndFlags(year, ordinal, flags);
             if (dateNullable == null)
@@ -346,7 +343,7 @@ namespace GTA.Chrono
         public static bool TryFromIsoWeekDate(int year, int week, IsoDayOfWeek dayOfWeek,
             out GameClockDate date)
         {
-            YearFlags flags = YearFlags.FromYear(year);
+            var flags = YearFlags.FromYear(year);
             uint nWeeks = flags.IsoWeekCount;
 
             if ((dayOfWeek < IsoDayOfWeek.Monday || dayOfWeek > IsoDayOfWeek.Sunday) ||
@@ -361,7 +358,7 @@ namespace GTA.Chrono
             if (weekOrd <= delta)
             {
                 // ordinal < 1, previous year
-                YearFlags prevFlags = YearFlags.FromYear(year - 1);
+                var prevFlags = YearFlags.FromYear(year - 1);
                 var prevOrdFlags = new OrdFlags(weekOrd + prevFlags.DayCount - delta, prevFlags);
                 date = new GameClockDate(year - 1, prevOrdFlags);
                 return true;
@@ -377,7 +374,7 @@ namespace GTA.Chrono
             }
 
             // ordinal > nDays, next year
-            YearFlags nextFlags = YearFlags.FromYear(year + 1);
+            var nextFlags = YearFlags.FromYear(year + 1);
             var nextOrdFlags = new OrdFlags(ordinal - nDays, nextFlags);
             date = new GameClockDate(year + 1, nextOrdFlags);
             return true;
@@ -555,7 +552,7 @@ namespace GTA.Chrono
             }
 
             // Clamp original day in case new month is shorter
-            YearFlags flags = YearFlags.FromYear(year);
+            var flags = YearFlags.FromYear(year);
             int dayMax = GetMaxDayOfMonth(month, flags);
             int day = Day;
             if (day > dayMax)
@@ -697,7 +694,7 @@ namespace GTA.Chrono
                 ThrowHelper.ThrowArgumentException("cannot create GameClockDate that represents February 29 in a non-leap year.");
             }
 
-            YearFlags flags = YearFlags.FromYear(year);
+            var flags = YearFlags.FromYear(year);
             mdf = mdf.WithFlags(flags);
 
             GameClockDate? newDate = FromMdf(year, mdf);
