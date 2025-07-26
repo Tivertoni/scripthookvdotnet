@@ -643,22 +643,12 @@ namespace GTA
             Function.Call(Hash.TASK_LEAVE_VEHICLE, _ped.Handle, vehicle.Handle, (int)flags);
         }
 
-        public void LookAt(Entity target, int duration = -1)
-        {
-            LookAt(target, duration, LookAtFlags.Default, LookAtPriority.Medium);
-        }
-
-        public void LookAt(Entity target, int duration, LookAtFlags lookFlags = LookAtFlags.Default, LookAtPriority priority = LookAtPriority.Medium)
+        public void LookAt(Entity target, int duration = -1, LookAtFlags lookFlags = LookAtFlags.Default, LookAtPriority priority = LookAtPriority.Medium)
         {
             Function.Call(Hash.TASK_LOOK_AT_ENTITY, _ped.Handle, target.Handle, duration, (int)lookFlags, (int)priority);
         }
 
-        public void LookAt(Vector3 position, int duration = -1)
-        {
-            LookAt(position, duration, LookAtFlags.Default, LookAtPriority.Medium);
-        }
-
-        public void LookAt(Vector3 position, int duration, LookAtFlags lookFlags = LookAtFlags.Default, LookAtPriority priority = LookAtPriority.Medium)
+        public void LookAt(Vector3 position, int duration = -1, LookAtFlags lookFlags = LookAtFlags.Default, LookAtPriority priority = LookAtPriority.Medium)
         {
             Function.Call(Hash.TASK_LOOK_AT_COORD, _ped.Handle, position.X, position.Y, position.Z, duration, (int)lookFlags, (int)priority);
         }
