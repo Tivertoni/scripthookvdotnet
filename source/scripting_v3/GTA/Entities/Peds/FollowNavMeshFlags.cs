@@ -4,12 +4,13 @@
 //
 
 using System;
+using GTA.Math;
 
 namespace GTA
 {
     /// <summary>
-    /// Set of flags which may be passed in to <see cref="TaskInvoker.FollowNavMeshTo(Math.Vector3, PedMoveBlendRatio?, int, float, FollowNavMeshFlags, float)"/>
-    /// and <see cref="TaskInvoker.FollowNavMeshTo(Math.Vector3, PedMoveBlendRatio, int, float, FollowNavMeshFlags, float, float, float, float)"/>.
+    /// Set of flags which may be passed in to <see cref="TaskInvoker.FollowNavMeshTo(Vector3, PedMoveBlendRatio?, int, float, FollowNavMeshFlags, float)"/>
+    /// and <see cref="TaskInvoker.FollowNavMeshTo(Vector3, PedMoveBlendRatio, int, float, FollowNavMeshFlags, float, float, float, float)"/>.
     /// The latter overload takes 3 additional parameters, which in some cases must contain values required for the extra functionality -
     /// where this is the case it is described in the individual documents of the flags.
     /// </summary>

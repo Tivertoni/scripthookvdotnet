@@ -4,11 +4,12 @@
 //
 
 using System;
+using GTA.Math;
 
 namespace GTA
 {
     /// <summary>
-    /// Set of enumerations of the available park types for <see cref="TaskInvoker.ParkVehicle(Vehicle, Math.Vector3, float, float, bool)"/>.
+    /// Set of enumerations of the available park types for <see cref="TaskInvoker.ParkVehicle(Vehicle, Vector3, float, float, bool)"/>.
     /// </summary>
     public enum ParkType
     {
