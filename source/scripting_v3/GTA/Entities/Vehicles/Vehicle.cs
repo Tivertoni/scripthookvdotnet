@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using SHVDN;
 
 namespace GTA
 {
@@ -1711,36 +1712,49 @@ namespace GTA
         /// Returns <see langword="true"/> if there are any bang or scuff decals on this <see cref="Vehicle"/>.
         /// </summary>
         public bool HasDamageDecals => Function.Call<bool>(Hash.GET_DOES_VEHICLE_HAVE_DAMAGE_DECALS, Handle);
-        [Obsolete("Use Vehicle.HasDamageDecals instead."), EditorBrowsable(EditorBrowsableState.Never)]
+
+
+
+        /// <inheritdoc cref="HasDamageDecals"/>
+        [Obsolete("Vehicle.IsDamaged is obsolete because it Use Vehicle.HasDamageDecals instead."), EditorBrowsable(EditorBrowsableState.Never)]
         public bool IsDamaged => Function.Call<bool>(Hash.GET_DOES_VEHICLE_HAVE_DAMAGE_DECALS, Handle);
 
         /// <summary>
-        /// Gets the value that indicates whether this <see cref="Vehicle"/> is driveable.
-        /// For the setter, it behaves in the same way as <see cref="IsUndriveable"/> except that this setter negates the value.
+        /// Gets a value indicating whether this <see cref="Vehicle"/> is driveable.
+        /// This returns <see langword="false"/> if the vehicle is considered destroyed (see <see cref="IsConsideredDestroyed"/>),
+        /// or if either <see cref="PetrolTankHealth"/> or <see cref="EngineHealth"/> is less than or equal to <c>0.0f</c>.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if the <see cref="Vehicle"/> is not destroyed (<see cref="IsConsideredDestroyed"/>
-        /// returns <see langword="false"/>) and both <see cref="PetrolTankHealth"/> and <see cref="EngineHealth"/> is
-        /// greater than 0.0f; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if the vehicle is not destroyed and both <see cref="PetrolTankHealth"/> and <see cref="EngineHealth"/>
+        /// are greater than <c>0.0f</c>; otherwise, <see langword="false"/>.
         /// </returns>
         public bool IsDriveable
         {
             get => Function.Call<bool>(Hash.IS_VEHICLE_DRIVEABLE, Handle, 0);
-            [Obsolete("The setter of Vehicle.IsDriveable is obsolete because SET_VEHICLE_UNDRIVEABLE sets a value to" +
-                "an dedicated flag that IS_VEHICLE_DRIVEABLE does not access. Use Vehicle.IsUndriveable instead.")
-                , EditorBrowsable(EditorBrowsableState.Never)]
+            [Obsolete("The setter of Vehicle.IsDriveable is obsolete because SET_VEHICLE_UNDRIVEABLE sets a value on a dedicated flag " +
+                      "that 'IS_VEHICLE_DRIVEABLE' does not access. Use Vehicle.IsUndriveable instead."), EditorBrowsable(EditorBrowsableState.Never)]
+
             set => Function.Call(Hash.SET_VEHICLE_UNDRIVEABLE, Handle, !value);
         }
 
         /// <summary>
-        /// Sets the value that indicates whether this <see cref="Vehicle"/> is forced to be undriveable
-        /// (but still enterable).
+        /// Gets or sets a value that forces this <see cref="Vehicle"/> to be undriveable,
+        /// without preventing entry.
         /// </summary>
+        /// <value>
+        /// <c>true</c> if the vehicle is forced to be undriveable; otherwise, <c>false</c>.
+        /// </value>
         public bool IsUndriveable
         {
             set => Function.Call(Hash.SET_VEHICLE_UNDRIVEABLE, Handle, value);
         }
 
+        /// <summary>
+        /// Gets or sets a value that specifies whether the left headlight of this <see cref="Vehicle"/> is broken.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the left headlight is broken; otherwise, <c>false</c>.
+        /// </value>
         public bool IsLeftHeadLightBroken
         {
             get => Function.Call<bool>(Hash.GET_IS_LEFT_VEHICLE_HEADLIGHT_DAMAGED, Handle);
@@ -1752,41 +1766,71 @@ namespace GTA
                     return;
                 }
 
-                SHVDN.MemDataMarshal.SetBit(address + SHVDN.NativeMemory.Vehicle.IsHeadlightDamagedOffset, 0, value);
+                MemDataMarshal.SetBit(address + NativeMemory.Vehicle.IsHeadlightDamagedOffset, 0, value);
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value that specifies whether the right headlight of this <see cref="Vehicle"/> is broken.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the right headlight is broken; otherwise, <c>false</c>.
+        /// </value>
         public bool IsRightHeadLightBroken
         {
             get => Function.Call<bool>(Hash.GET_IS_RIGHT_VEHICLE_HEADLIGHT_DAMAGED, Handle);
             set
             {
                 IntPtr address = MemoryAddress;
-                if (address == IntPtr.Zero || SHVDN.NativeMemory.Vehicle.IsHeadlightDamagedOffset == 0)
+                if (address == IntPtr.Zero || NativeMemory.Vehicle.IsHeadlightDamagedOffset == 0)
                 {
                     return;
                 }
 
-                SHVDN.MemDataMarshal.SetBit(address + SHVDN.NativeMemory.Vehicle.IsHeadlightDamagedOffset, 1, value);
+                MemDataMarshal.SetBit(address + NativeMemory.Vehicle.IsHeadlightDamagedOffset, 1, value);
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the rear bumper of this <see cref="Vehicle"/> has broken off.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the rear bumper is detached; otherwise, <c>false</c>.
+        /// </value>
         public bool IsRearBumperBrokenOff => Function.Call<bool>(Hash.IS_VEHICLE_BUMPER_BROKEN_OFF, Handle, false);
+
+        /// <summary>
+        /// Gets a value indicating whether the front bumper of this <see cref="Vehicle"/> has broken off.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the front bumper is detached; otherwise, <c>false</c>.
+        /// </value>
 
         public bool IsFrontBumperBrokenOff => Function.Call<bool>(Hash.IS_VEHICLE_BUMPER_BROKEN_OFF, Handle, true);
 
         /// <summary>
         /// Sets the value that indicates whether this <see cref="Vehicle"/> has strong axles
-        /// so that its axles dont break easily.
+        /// so that its axles do not break easily.
         /// </summary>
+        /// <value>
+        /// <c>true</c> if the tires can burst; otherwise, <c>false</c>.
+        /// </value>
         public bool IsAxlesStrong
         {
             set => Function.Call<bool>(Hash.SET_VEHICLE_HAS_STRONG_AXLES, Handle, value);
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the tires of this <see cref="Vehicle"/> can burst.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the tires can burst; otherwise, <c>false</c>.
+        /// </value>
+
         public bool CanTiresBurst
         {
             get => Function.Call<bool>(Hash.GET_VEHICLE_TYRES_CAN_BURST, Handle);
+            
             set => Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Handle, value);
         }
 
@@ -1795,16 +1839,21 @@ namespace GTA
             get
             {
                 IntPtr address = MemoryAddress;
-                if (address == IntPtr.Zero || SHVDN.NativeMemory.Vehicle.CanWheelBreakOffset == 0)
+                if (address == IntPtr.Zero || NativeMemory.Vehicle.CanWheelBreakOffset == 0)
                 {
                     return false;
                 }
-
-                return !SHVDN.MemDataMarshal.IsBitSet(address + SHVDN.NativeMemory.Vehicle.CanWheelBreakOffset, 6);
+                return !MemDataMarshal.IsBitSet(address + NativeMemory.Vehicle.CanWheelBreakOffset, 6);
             }
             set => Function.Call(Hash.SET_VEHICLE_WHEELS_CAN_BREAK, Handle, value);
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="Vehicle"/> visibly shows damage.
+        /// </summary>
+        /// <value>
+        /// <see langword="true" /> if the vehicle shows visible damage; otherwise, <see langword="false" />.
+        /// </value>
         public bool CanBeVisiblyDamaged
         {
             set => Function.Call(Hash.SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED, Handle, value);

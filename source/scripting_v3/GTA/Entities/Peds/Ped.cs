@@ -2075,12 +2075,19 @@ namespace GTA
         /// </summary>
         public bool IsInMeleeCombat => Function.Call<bool>(Hash.IS_PED_IN_MELEE_COMBAT, Handle);
 
+        /// <summary>
+        /// Indicates whether this <see cref="Ped"/> is currently aiming.
+        /// </summary>
         public bool IsAiming => GetConfigFlag(PedConfigFlagToggles.IsAimingGun);
+
 
         public bool IsPlantingBomb => Function.Call<bool>(Hash.IS_PED_PLANTING_BOMB, Handle);
 
         public bool IsShooting => Function.Call<bool>(Hash.IS_PED_SHOOTING, Handle);
 
+        /// <summary>
+        /// Indicates whether this <see cref="Ped"/> is currently reloading.
+        /// </summary>
         public bool IsReloading => Function.Call<bool>(Hash.IS_PED_RELOADING, Handle);
 
         public bool IsDoingDriveBy => Function.Call<bool>(Hash.IS_PED_DOING_DRIVEBY, Handle);
@@ -2738,6 +2745,10 @@ namespace GTA
         #region Speeches
         // This region is for properties and methods that access an audSpeechAudioEntity instance
 
+
+        /// <summary>
+        /// Sets whether this <see cref="Ped"/> can play pain sounds when hurt.
+        /// </summary>
         public bool IsPainAudioEnabled
         {
             set => Function.Call(Hash.DISABLE_PED_PAIN_AUDIO, Handle, !value);

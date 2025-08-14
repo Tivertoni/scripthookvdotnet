@@ -32,10 +32,13 @@ namespace GTA.UI
         {
             Function.Call(Hash.SHOW_HUD_COMPONENT_THIS_FRAME, (int)component);
         }
+
         /// <summary>
-        /// Hides the specified <see cref="HudComponent"/> this frame.
+        /// Hides the specified <see cref="HudComponent"/> for the current frame.
         /// </summary>
-        /// <param name="component">The <see cref="HudComponent"/> to hide.</param>
+        /// <param name="component">
+        /// The <see cref="HudComponent"/> to hide for this frame only.
+        /// </param>
         public static void HideComponentThisFrame(HudComponent component)
         {
             Function.Call(Hash.HIDE_HUD_COMPONENT_THIS_FRAME, (int)component);
@@ -50,7 +53,7 @@ namespace GTA.UI
         }
 
         /// <summary>
-        /// Gets or sets the sprite the cursor should use when drawn.
+        /// Gets or sets the <see cref="CursorSprite"/> the cursor should use when drawn.
         /// </summary>
         public static CursorSprite CursorSprite
         {
@@ -100,14 +103,46 @@ namespace GTA.UI
         public static void UnlockRadarPosition() => Function.Call(Hash.UNLOCK_MINIMAP_POSITION);
 
         /// <summary>
-        /// Sets how far the minimap should be zoomed in.
+        /// Sets the radar (mini-map) zoom level.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The value is clamped internally depending on whether the game is in big map mode or standard mini-map mode:
+        /// <list type="bullet">
+        /// <item><description>Standard mini-map: 0–1500</description></item>
+        /// <item><description>Big map: 0–6000</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// A value of <c>0</c> disables the zoom override and restores the default zoom.
+        /// Non-zero values have an internal offset of +100 applied by the game.
+        /// This method has no effect while the pause menu frontend map is active.
+        /// </para>
+        /// </remarks>
         /// <value>
-        /// The radar zoom; accepts values from 0 to 200.
+        /// The zoom level to apply. Passing <c>0</c> disables custom zoom.
         /// </value>
         public static int RadarZoom
         {
             set => Function.Call(Hash.SET_RADAR_ZOOM, value);
+        }
+
+        /// <summary>
+        /// Sets the radar (mini-map) zoom level as a precise percentage of the default zoom.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The zoom value is given as a percentage in the range <c>0.0f</c> (fully zoomed out)
+        /// to <c>100.0f</c> (maximum zoom in). Values outside this range are automatically clamped.
+        /// </para>
+        /// <para>
+        /// This method overrides the radar zoom for the current frame using a percentage scale,
+        /// and clears any previously set zoom values from <see cref="RadarZoom"/>.
+        /// </para>
+        /// </remarks>
+        public static float RadarZoomPrecise
+        {
+            set => Function.Call(Hash.SET_RADAR_ZOOM_PRECISE, value);
         }
     }
 }

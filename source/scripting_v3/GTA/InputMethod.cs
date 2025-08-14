@@ -5,9 +5,19 @@
 
 namespace GTA
 {
+    /// <summary>
+    /// Enumeration of all input methods supported by GTA.
+    /// </summary>
     public enum InputMethod
     {
+        /// <summary>
+        /// Mouse and keyboard input method.
+        /// </summary>
         MouseAndKeyboard = 0,
+
+        /// <summary>
+        /// Gamepad controller input method.
+        /// </summary>
         GamePad = 2,
     }
 }

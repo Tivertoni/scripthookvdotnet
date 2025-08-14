@@ -44,21 +44,32 @@ namespace GTA
         /// </summary>
         AngularImpulse,
 
+        /// <inheritdoc cref="InternalForce"/>
         [Obsolete("ForceType.MinForce is obsolete because it is incorrect, use ForceType.InternalForce instead."),
         EditorBrowsable(EditorBrowsableState.Never)]
         MinForce = InternalForce,
+
+        /// <inheritdoc cref="InternalImpulse"/>
         [Obsolete("ForceType.MaxForceRot is obsolete because it is incorrect, use ForceType.InternalImpulse instead."),
         EditorBrowsable(EditorBrowsableState.Never)]
         MaxForceRot = InternalImpulse,
+
+        /// <inheritdoc cref="ExternalForce"/>
         [Obsolete("ForceType.MinForce2 is obsolete because it is incorrect, use ForceType.ExternalForce instead."),
         EditorBrowsable(EditorBrowsableState.Never)]
         MinForce2 = ExternalForce,
+
+        /// <inheritdoc cref="ExternalImpulse"/>
         [Obsolete("ForceType.MaxForceRot2 is obsolete because it is incorrect, use ForceType.ExternalImpulse instead."),
         EditorBrowsable(EditorBrowsableState.Never)]
         MaxForceRot2 = ExternalImpulse,
+
+        /// <inheritdoc cref="Torque"/>
         [Obsolete("ForceType.ForceNoRot is obsolete because it is incorrect, use ForceType.Torque instead."),
          EditorBrowsable(EditorBrowsableState.Never)]
         ForceNoRot = Torque,
+
+        /// <inheritdoc cref="AngularImpulse"/>
         [Obsolete("ForceType.ForceRotPlusForce is obsolete because it is incorrect, use ForceType.AngularImpulse instead."),
          EditorBrowsable(EditorBrowsableState.Never)]
         ForceRotPlusForce = AngularImpulse,

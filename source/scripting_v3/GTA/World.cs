@@ -1941,8 +1941,6 @@ namespace GTA
             return handle == 0 ? null : new ParticleEffect(handle, asset.AssetName, effectName, null);
         }
 
-        private static bool HasFlagFast(InvertAxisFlags flagValues, InvertAxisFlags flag) => (flagValues & flag) == flag;
-
         /// <summary>
         /// Stops all particle effects in a range.
         /// </summary>
@@ -2365,6 +2363,13 @@ namespace GTA
         {
             Function.Call(Hash.DRAW_SHADOWED_SPOT_LIGHT, pos.X, pos.Y, pos.Z, dir.X, dir.Y, dir.Z, color.R, color.G, color.B, distance, brightness, roundness, radius, fadeout);
         }
+
+        /// <summary>
+        /// Draws a 3D line between two positions in the game world.
+        /// </summary>
+        /// <param name="start">The starting position (<see cref="Vector3"/>) in world coordinates.</param>
+        /// <param name="end">The ending position (<see cref="Vector3"/>) in world coordinates.</param>
+        /// <param name="color">The color of the line.</param>
 
         public static void DrawLine(Vector3 start, Vector3 end, Color color)
         {
@@ -3027,5 +3032,7 @@ namespace GTA
         }
 
         #endregion
+
+        private static bool HasFlagFast(InvertAxisFlags flagValues, InvertAxisFlags flag) => (flagValues & flag) == flag;
     }
 }

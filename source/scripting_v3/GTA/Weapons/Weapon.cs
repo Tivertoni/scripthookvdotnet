@@ -5,6 +5,7 @@
 
 using GTA.Native;
 using System.Linq;
+using SHVDN;
 
 namespace GTA
 {
@@ -49,12 +50,22 @@ namespace GTA
         /// <summary>
         /// Gets the localized human name for this <see cref="Weapon"/>.
         /// </summary>
-        public string LocalizedName => Game.GetLocalizedString((int)SHVDN.NativeMemory.GetHumanNameHashOfWeaponInfo((uint)Hash));
+        public string LocalizedName => Game.GetLocalizedString((int)NativeMemory.GetHumanNameHashOfWeaponInfo((uint)Hash));
 
+        /// <summary>
+        /// Returns <c>true</c> if this <see cref="Weapon"/> is <see cref="WeaponHash.Unarmed"/> 
+        /// or is present in the owner's inventory.
+        /// </summary>
         public bool IsPresent => Hash == WeaponHash.Unarmed || Function.Call<bool>(Native.Hash.HAS_PED_GOT_WEAPON, _owner.Handle, (uint)Hash);
 
+        /// <summary>
+        /// Gets the <see cref="Model"/> of this <see cref="Weapon"/>.
+        /// </summary>
         public Model Model => new(Function.Call<int>(Native.Hash.GET_WEAPONTYPE_MODEL, (uint)Hash));
 
+        /// <summary>
+        /// Gets or sets the current <see cref="WeaponTint"/> applied to this <see cref="Weapon"/>.
+        /// </summary>
         public WeaponTint Tint
         {
             get => Function.Call<WeaponTint>(Native.Hash.GET_PED_WEAPON_TINT_INDEX, _owner.Handle, (uint)Hash);
@@ -66,6 +77,9 @@ namespace GTA
         /// </summary>
         public int TintCount => Function.Call<int>(Native.Hash.GET_WEAPON_TINT_COUNT, (uint)Hash);
 
+        /// <summary>
+        /// Gets the <see cref="WeaponGroup"/> of the current <see cref="Weapon"/>.
+        /// </summary>
         public WeaponGroup Group => Function.Call<WeaponGroup>(Native.Hash.GET_WEAPONTYPE_GROUP, (uint)Hash);
 
         /// <summary>
@@ -233,14 +247,16 @@ namespace GTA
             set => Function.Call(Native.Hash.SET_PED_INFINITE_AMMO_CLIP, _owner.Handle, value);
         }
 
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Weapon"/> can be used while parachuting.
+        /// </summary>
         public bool CanUseOnParachute => Function.Call<bool>(Native.Hash.CAN_USE_WEAPON_ON_PARACHUTE, (uint)Hash);
 
+        /// <summary>
+        /// Gets all <see cref="WeaponComponent"/>s attached to this <see cref="Weapon"/>.
+        /// </summary>
         public WeaponComponentCollection Components => _components ??= new WeaponComponentCollection(_owner, this);
-
-        public static implicit operator WeaponHash(Weapon weapon)
-        {
-            return weapon.Hash;
-        }
 
         /// <summary>
         /// Gets the display name label string for the <see cref="WeaponHash"/>.
@@ -394,16 +410,26 @@ namespace GTA
         /// <summary>
         /// Gets the localized human name for the <see cref="WeaponHash"/>.
         /// </summary>
-        public static string GetHumanNameFromHash(WeaponHash hash) => Game.GetLocalizedString((int)SHVDN.NativeMemory.GetHumanNameHashOfWeaponInfo((uint)hash));
+        public static string GetHumanNameFromHash(WeaponHash hash) => Game.GetLocalizedString((int)NativeMemory.GetHumanNameHashOfWeaponInfo((uint)hash));
 
         public static WeaponHash[] GetAllWeaponHashesForHumanPeds()
         {
-            return SHVDN.NativeMemory.GetAllWeaponHashesForHumanPeds().Select(x => (WeaponHash)x).ToArray();
+            return NativeMemory.GetAllWeaponHashesForHumanPeds().Select(x => (WeaponHash)x).ToArray();
         }
 
         public static Model[] GetAllModels()
         {
-            return SHVDN.NativeMemory.WeaponModels.Select(x => new Model(x)).ToArray();
+            return NativeMemory.WeaponModels.Select(x => new Model(x)).ToArray();
+        }
+
+        /// <summary>
+        /// Implicitly converts a <see cref="Weapon"/> to its <see cref="WeaponHash"/>.
+        /// </summary>
+        /// <param name="weapon">The weapon instance to convert.</param>
+        /// <returns>The <see cref="WeaponHash"/> of the specified weapon.</returns>
+        public static implicit operator WeaponHash(Weapon weapon)
+        {
+            return weapon.Hash;
         }
     }
 }

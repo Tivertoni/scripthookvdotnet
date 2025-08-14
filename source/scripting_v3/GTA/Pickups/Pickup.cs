@@ -9,7 +9,7 @@ using GTA.Native;
 namespace GTA
 {
     /// <summary>
-    /// Represents a pickup placement, not pickup object.
+    /// Represents a pickup placement, <c>not</c> pickup object.
     /// </summary>
     public sealed class Pickup : PoolObject
     {

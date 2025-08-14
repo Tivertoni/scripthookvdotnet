@@ -41,6 +41,7 @@ namespace GTA
                 return foundWater;
             }
         }
+
         /// <summary>
         /// Gets the height of the water below the position excluding the waves.
         /// This method does not take the waves into account so the result will be the same between

@@ -29955,6 +29955,9 @@ namespace GTA.NaturalMotion
         }
     }
 
+    /// <summary>
+    /// Helper for sending a Yanked <see cref="Message"/> to a given <see cref="Ped"/>.
+    /// </summary>
     public sealed class YankedHelper : CustomHelper
     {
         /// <summary>

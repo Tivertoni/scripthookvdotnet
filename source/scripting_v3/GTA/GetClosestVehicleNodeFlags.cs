@@ -7,6 +7,9 @@ using System;
 
 namespace GTA
 {
+    /// <summary>
+    /// Enumeration of possible flags primarily used in <see cref="PathFind.GetClosestVehicleNode"/>.
+    /// </summary>
     [Flags]
     public enum GetClosestVehicleNodeFlags
     {

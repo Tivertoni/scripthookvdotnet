@@ -243,121 +243,175 @@ namespace GTA
         /// </summary>
         PitLane,
 
+        /// <inheritdoc cref="Cone"/>
         [Obsolete("Use `MarkerType.Cone` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_CONE`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         UpsideDownCone = Cone,
+
+        /// <inheritdoc cref="Cylinder"/>
         [Obsolete("Use `MarkerType.Cylinder` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_CYLINDER`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         VerticalCylinder = Cylinder,
+
+        /// <inheritdoc cref="Arrow"/>
         [Obsolete("Use `MarkerType.Arrow` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_ARROW`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ThickChevronUp = Arrow,
+
+        /// <inheritdoc cref="ArrowFlat"/>
         [Obsolete("Use `MarkerType.ArrowFlat` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_ARROW_FLAT`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ThinChevronUp = ArrowFlat,
+
+        /// <inheritdoc cref="Flag"/>
         [Obsolete("Use `MarkerType.Flag` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_FLAG`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         CheckeredFlagRect = Flag,
+
+        /// <inheritdoc cref="RingFlag"/>
         [Obsolete("Use `MarkerType.RingFlag` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_RING_FLAG`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         CheckeredFlagCircle = RingFlag,
-        /// <summary>
-        /// Vehicle Circle
-        /// </summary>
+
+        /// <inheritdoc cref="Ring"/>
         [Obsolete("Use `MarkerType.Ring` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_RING`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         VerticleCircle = Ring,
+
+        /// <inheritdoc cref="Plane"/>
         [Obsolete("Use `MarkerType.Plane` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_PLANE`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         PlaneModel = Plane,
+
+        /// <inheritdoc cref="BikeLogo1"/>
         [Obsolete("Use `MarkerType.BikeLogo1` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_LOGO_1`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         LostMCDark = BikeLogo1,
+
+        /// <inheritdoc cref="BikeLogo2"/>
         [Obsolete("Use `MarkerType.BikeLogo2` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_LOGO_2`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         LostMCLight = BikeLogo2,
+
+        /// <inheritdoc cref="Num0"/>
         [Obsolete("Use `MarkerType.Num0` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_0`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number0 = Num0,
+
+        /// <inheritdoc cref="Num1"/>
         [Obsolete("Use `MarkerType.Num1` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_1`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number1 = Num1,
+
+        /// <inheritdoc cref="Num2"/>
         [Obsolete("Use `MarkerType.Num2` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_2`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number2 = Num2,
+
+        /// <inheritdoc cref="Num3"/>
         [Obsolete("Use `MarkerType.Num3` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_3`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number3 = Num3,
+
+        /// <inheritdoc cref="Num4"/>
         [Obsolete("Use `MarkerType.Num4` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_4`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number4 = Num4,
+
+        /// <inheritdoc cref="Num5"/>
         [Obsolete("Use `MarkerType.Num5` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_5`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number5 = Num5,
+
+        /// <inheritdoc cref="Num6"/>
         [Obsolete("Use `MarkerType.Num6` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_6`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number6 = Num6,
+
+        /// <inheritdoc cref="Num7"/>
         [Obsolete("Use `MarkerType.Num7` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_7`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number7 = Num7,
+
+        /// <inheritdoc cref="Num8"/>
         [Obsolete("Use `MarkerType.Num8` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_8`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number8 = Num8,
+
+        /// <inheritdoc cref="Num9"/>
         [Obsolete("Use `MarkerType.Num9` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_NUM_9`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         Number9 = Num9,
+
+        /// <inheritdoc cref="Chevron1"/>
         [Obsolete("Use `MarkerType.Chevron1` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_CHEVRON_1`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ChevronUpx1 = Chevron1,
+
+        /// <inheritdoc cref="Chevron2"/>
         [Obsolete("Use `MarkerType.Chevron2` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_CHEVRON_2`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ChevronUpx2 = Chevron2,
+
+        /// <inheritdoc cref="Chevron3"/>
         [Obsolete("Use `MarkerType.Chevron3` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_BIKE_CHEVRON_3`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ChevronUpx3 = Chevron3,
+
+        /// <inheritdoc cref="RingFlat"/>
         [Obsolete("Use `MarkerType.RingFlat` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_RING_FLAT`.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         HorizontalCircleFat = RingFlat,
+
+        /// <inheritdoc cref="Lap"/>
         [Obsolete("Use `MarkerType.Lap` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_LAP.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         ReplayIcon = Lap,
+
+        /// <inheritdoc cref="Halo"/>
         [Obsolete("Use `MarkerType.Halo` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_HALO.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         HorizontalCircleSkinny = Halo,
+
+        /// <inheritdoc cref="HaloPoint"/>
         [Obsolete("Use `MarkerType.HaloPoint` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_HALO_POINT.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         HorizontalCircleSkinnyArrow = HaloPoint,
+
+        /// <inheritdoc cref="HaloRotate"/>
         [Obsolete("Use `MarkerType.HaloRotate` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_HALO_ROTATE.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         HorizontalSplitArrowCircle = HaloRotate,
+
+        /// <inheritdoc cref="Sphere"/>
         [Obsolete("`MarkerType.DebugSphere` is obsolete because \"Debug\" of the name is misleading. " +
                   "Use `MarkerType.Sphere` instead, which is named after the canonical name " +
                   "`MarkerType_e::MARKERTYPE_SPHERE`")]

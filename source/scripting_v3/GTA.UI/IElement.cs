@@ -7,6 +7,10 @@ using System.Drawing;
 
 namespace GTA.UI
 {
+    /// <summary>
+    /// Represents elements that are drawn either directly on the screen 
+    /// or within a <see cref="ContainerElement"/>.
+    /// </summary>
     public interface IElement
     {
         /// <summary>

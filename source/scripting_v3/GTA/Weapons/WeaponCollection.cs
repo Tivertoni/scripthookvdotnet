@@ -246,6 +246,13 @@ namespace GTA
             }
         }
 
+        /// <summary>
+        /// Equips the specified <see cref="Weapon"/> on the <see cref="Ped"/>.
+        /// </summary>
+        /// <param name="weapon">The weapon to equip.</param>
+        /// <returns>
+        /// <c>false</c> if the ped does not have the weapon in their inventory; otherwise <c>true</c>.
+        /// </returns>
         public bool Select(Weapon weapon)
         {
             if (!weapon.IsPresent)
@@ -257,10 +264,19 @@ namespace GTA
 
             return true;
         }
+
+        /// <summary>
+        /// Equips the specified <see cref="WeaponHash"/> on the <see cref="Ped"/>.
+        /// </summary>
+        /// <param name="weaponHash">The hash of the weapon to equip.</param>
+        /// <returns>
+        /// <c>false</c> if the ped does not have the weapon in their inventory; otherwise <c>true</c>.
+        /// </returns>
         public bool Select(WeaponHash weaponHash)
         {
             return Select(weaponHash, true);
         }
+
         /// <summary>
         /// Selects the specified weapon.
         /// </summary>
@@ -278,6 +294,7 @@ namespace GTA
 
             return true;
         }
+
         /// <summary>
         /// Selects the specified weapon.
         /// </summary>
@@ -361,11 +378,13 @@ namespace GTA
 
             Remove(weapon.Hash);
         }
+
         /// <inheritdoc cref="Remove(Weapon)"/>
         public void Remove(WeaponHash weaponHash)
         {
             Function.Call(Hash.REMOVE_WEAPON_FROM_PED, owner.Handle, (uint)weaponHash);
         }
+
         /// <inheritdoc cref="Remove(Weapon)"/>
         public void Remove(string weaponName) => Remove((WeaponHash)StringHash.AtStringHashUtf8(weaponName));
 

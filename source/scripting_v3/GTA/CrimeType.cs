@@ -5,6 +5,9 @@
 
 namespace GTA
 {
+    /// <summary>
+    /// Enumeration of possible crimes that can be commited.
+    /// </summary>
     public enum CrimeType
     {
         None,

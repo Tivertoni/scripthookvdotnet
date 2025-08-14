@@ -5,6 +5,9 @@
 
 namespace GTA
 {
+    /// <summary>
+    /// Enumeration of vanilla included license plate styles.
+    /// </summary>
     public enum LicensePlateStyle
     {
         BlueOnWhite1 = 3,

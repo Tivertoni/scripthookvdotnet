@@ -6,7 +6,7 @@
 namespace GTA.UI
 {
     /// <summary>
-    /// An enumeration of all possible component of the HUD.
+    /// Enumeration of all possible component of the HUD.
     /// </summary>
     public enum HudComponent
     {

@@ -6,7 +6,6 @@
 using GTA.Native;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
@@ -90,8 +89,8 @@ namespace GTA
 
         /// <summary>
         /// Gets the local player <see cref="Ped"/> that you are controlling.
-        /// Use this property instead of <see cref="GTA.Player.Character"/> when you are only interested in the player <see cref="Ped"/>
-        /// and not the <see cref="GTA.Player"/> instance where a lot of player specific states are stored.
+        /// Use this property instead of <see cref="Player.Character"/> when you are only interested in the player <see cref="Ped"/>
+        /// and not the <see cref="Player"/> instance where a lot of player specific states are stored.
         /// </summary>
         public static Ped LocalPlayerPed
         {
@@ -734,6 +733,7 @@ namespace GTA
         {
             return SHVDN.NativeMemory.GetGxtEntryByHash(entryLabelHash);
         }
+
 
         /// <summary>
         /// Gets a value associated with the specified index of the profile setting.

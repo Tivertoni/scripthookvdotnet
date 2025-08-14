@@ -5,6 +5,10 @@
 
 namespace GTA
 {
+
+    /// <summary>
+    /// Enumeration of compatible Gamepad buttons.
+    /// </summary>
     public enum Button
     {
         PadUp = 117,

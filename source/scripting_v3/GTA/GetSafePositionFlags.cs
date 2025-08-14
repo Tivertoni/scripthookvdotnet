@@ -21,6 +21,7 @@ namespace GTA
     public enum GetSafePositionFlags
     {
         Default = 0,
+
         /// <summary>
         /// Only navmesh polygons marked as pavement.
         /// </summary>
@@ -28,6 +29,7 @@ namespace GTA
         /// The pavement flag is named <c>B02_IsFootpath</c> in CodeWalker30_dev44.
         /// </remarks>
         OnlyPavement = 1,
+
         /// <summary>
         /// Only navmesh polygons not marked as "isolated".
         /// </summary>
@@ -35,6 +37,7 @@ namespace GTA
         /// The isolated flag is named <c>B15_InteractionUnk</c> in CodeWalker30_dev44.
         /// </remarks>
         NotIsolated = 2,
+
         /// <summary>
         /// No navmesh polygons created from interiors.
         /// </summary>
@@ -42,6 +45,7 @@ namespace GTA
         /// The interior flag is named <c>B14_IsInterior</c> in CodeWalker30_dev44.
         /// </remarks>
         NotInterior = 4,
+
         /// <summary>
         /// No navmesh polygons marked as water.
         /// </summary>
@@ -49,6 +53,7 @@ namespace GTA
         /// The water flag is named <c>B07_IsWater</c> in CodeWalker30_dev44.
         /// </remarks>
         NotWater = 8,
+
         /// <summary>
         /// Only navmesh polygons marked as "network spawn candidate".
         /// </summary>
@@ -57,6 +62,7 @@ namespace GTA
         /// Despite the name in the said CodeWalker build, some slope navmesh polygons has the "network spawn candidate" flag.
         /// </remarks>
         OnlyNetworkSpawn = 16,
+
         /// <summary>
         /// Specify whether to use a flood-fill from the starting position, as opposed to scanning all polygons within the search volume.
         /// </summary>

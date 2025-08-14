@@ -7,18 +7,49 @@ using GTA.Math;
 using GTA.Native;
 using System;
 using System.Drawing;
+using GTA.UI;
 
 namespace GTA
 {
     /// <summary>
-    /// A class which handles rendering of Scaleform elements.
+    /// Represents a class responsible for rendering and managing Scaleform elements.
     /// </summary>
     public sealed class Scaleform : IDisposable, INativeValue
     {
+        /// <summary>
+        /// Represents the Handle for this <see cref="Scaleform"/>.
+        /// </summary>
+        public int Handle
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Handle"/> of this <see cref="Scaleform"/> as an <see cref="ulong"/>.
+        /// </summary>
+        public ulong NativeValue
+        {
+            get => (ulong)Handle;
+            set => Handle = unchecked((int)value);
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if <see cref="Handle"/> is not <c>0</c>.
+        /// </summary>
+        public bool IsValid => SHVDN.NativeMemory.IsScaleformMovieHandleValid((uint)Handle);
+
+        /// <summary>
+        /// Returns <c>true</c> if this <see cref="Scaleform"/> is loaded.
+        /// </summary>
+        public bool IsLoaded => Function.Call<bool>(Hash.HAS_SCALEFORM_MOVIE_LOADED, Handle);
+
         internal Scaleform(int handle)
         {
             Handle = handle;
         }
+        /// <inheritdoc cref="RequestMovie"/>
+        /// <param name="scaleformID"></param>
         [Obsolete("The Scaleform constructor with a string parameter is obsolete. Use Scaleform.RequestMovie instead.")]
         public Scaleform(string scaleformID)
         {
@@ -28,7 +59,9 @@ namespace GTA
         /// <summary>
         /// Requests a scaleform movie that is streamed in.
         /// </summary>
-        /// <returns>A <see cref="Scaleform"/> instance if successfully created; otherwise, <see langword="null"/>.</returns>
+        /// <returns>
+        /// A <see cref="Scaleform"/> instance if successfully created; otherwise, <see langword="null"/>.
+        /// </returns>
         /// <remarks>
         /// Only allows 1 instance of a movie active at one time, so you cannot create multiple instances for the same movie.
         /// </remarks>
@@ -71,34 +104,24 @@ namespace GTA
             return handle != 0 ? new Scaleform(handle) : null;
         }
 
+        /// <summary>
+        /// Disposes this <see cref="Scaleform"/>, use <seealso cref="IsLoaded"/> and/or <seealso cref="IsValid"/> to check if operation was successful.
+        /// </summary>
         public void Dispose()
         {
-            if (IsLoaded)
+            if (!IsLoaded) return;
+
+            unsafe
             {
-                unsafe
-                {
-                    int handle = Handle;
-                    Function.Call(Hash.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED, &handle);
-                }
+                int handle = Handle;
+                Function.Call(Hash.SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED, &handle);
+                Handle = handle;
             }
         }
 
-        public int Handle
-        {
-            get;
-            private set;
-        }
 
-        public ulong NativeValue
-        {
-            get => (ulong)Handle;
-            set => Handle = unchecked((int)value);
-        }
 
-        public bool IsValid => Handle != 0;
-        public bool IsLoaded => Function.Call<bool>(Hash.HAS_SCALEFORM_MOVIE_LOADED, Handle);
-
-        void CallFunctionHead(string function, params object[] arguments)
+        private void CallFunctionHead(string function, params object[] arguments)
         {
             Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, function);
 
@@ -155,10 +178,10 @@ namespace GTA
         }
         public void Render2DScreenSpace(PointF position, PointF size)
         {
-            float x = position.X / UI.Screen.Width;
-            float y = position.Y / UI.Screen.Height;
-            float w = size.X / UI.Screen.Width;
-            float h = size.Y / UI.Screen.Height;
+            float x = position.X / Screen.Width;
+            float y = position.Y / Screen.Height;
+            float w = size.X / Screen.Width;
+            float h = size.Y / Screen.Height;
 
             Function.Call(Hash.DRAW_SCALEFORM_MOVIE, Handle, x + (w * 0.5f), y + (h * 0.5f), w, h, 255, 255, 255, 255);
         }
@@ -190,9 +213,14 @@ namespace GTA
         public static Scaleform FromHandle(int handle)
             => SHVDN.NativeMemory.IsScaleformMovieHandleValid((uint)handle) ? new Scaleform(handle) : null;
 
-        public static implicit operator InputArgument(Scaleform value)
+        /// <summary>
+        /// Implicitly converts a <see cref="Scaleform"/> instance to an <see cref="InputArgument"/>.
+        /// </summary>
+        /// <param name="scaleform">The <see cref="Scaleform"/> instance to convert.</param>
+        /// <returns>An <see cref="InputArgument"/> representing the <see cref="Scaleform"/> handle.</returns>
+        public static implicit operator InputArgument(Scaleform scaleform)
         {
-            return new InputArgument((ulong)value.Handle);
+            return new InputArgument(scaleform.NativeValue);
         }
     }
 }
