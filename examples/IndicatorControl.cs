@@ -1,51 +1,54 @@
 using System;
 using GTA;
 
-public class IndicatorControl : Script
+namespace IndicatorControl
 {
-    public IndicatorControl()
+    public class IndicatorControl : Script
     {
-        Tick += OnTick;
-        Interval = 100;
-    }
-
-    private readonly bool[] _active = new bool[2];
-    private readonly DateTime[] _timeLeft = new DateTime[2];
-
-    private void OnTick(object sender, EventArgs e)
-    {
-        Ped playerPed = Game.LocalPlayerPed;
-
-        if (playerPed.IsInVehicle())
+        public IndicatorControl()
         {
-            Vehicle vehicle = playerPed.CurrentVehicle;
+            Tick += OnTick;
+            Interval = 100;
+        }
 
-            if (Game.IsControlPressed(Control.VehicleMoveLeftOnly))
+        private readonly bool[] _active = new bool[2];
+        private readonly DateTime[] _timeLeft = new DateTime[2];
+
+        private void OnTick(object sender, EventArgs e)
+        {
+            Ped playerPed = Game.LocalPlayerPed;
+
+            if (playerPed.IsInVehicle())
             {
-                if (vehicle.Speed < 10.0f)
+                Vehicle vehicle = playerPed.CurrentVehicle;
+
+                if (Game.IsControlPressed(Control.VehicleMoveLeftOnly))
                 {
-                    vehicle.IsLeftIndicatorLightOn = _active[0] = true;
-                    vehicle.IsRightIndicatorLightOn = _active[1] = false;
-                    _timeLeft[0] = DateTime.Now + TimeSpan.FromMilliseconds(3000);
+                    if (vehicle.Speed < 10.0f)
+                    {
+                        vehicle.IsLeftIndicatorLightOn = _active[0] = true;
+                        vehicle.IsRightIndicatorLightOn = _active[1] = false;
+                        _timeLeft[0] = DateTime.Now + TimeSpan.FromMilliseconds(3000);
+                    }
                 }
-            }
-            else if (_active[0] && DateTime.Now > _timeLeft[0])
-            {
-                vehicle.IsLeftIndicatorLightOn = _active[0] = false;
-            }
-
-            if (Game.IsControlPressed(Control.VehicleMoveRightOnly))
-            {
-                if (vehicle.Speed < 10.0f)
+                else if (_active[0] && DateTime.Now > _timeLeft[0])
                 {
                     vehicle.IsLeftIndicatorLightOn = _active[0] = false;
-                    vehicle.IsRightIndicatorLightOn = _active[1] = true;
-                    _timeLeft[1] = DateTime.Now + TimeSpan.FromMilliseconds(3000);
                 }
-            }
-            else if (_active[1] && DateTime.Now > _timeLeft[1])
-            {
-                vehicle.IsRightIndicatorLightOn = _active[1] = false;
+
+                if (Game.IsControlPressed(Control.VehicleMoveRightOnly))
+                {
+                    if (vehicle.Speed < 10.0f)
+                    {
+                        vehicle.IsLeftIndicatorLightOn = _active[0] = false;
+                        vehicle.IsRightIndicatorLightOn = _active[1] = true;
+                        _timeLeft[1] = DateTime.Now + TimeSpan.FromMilliseconds(3000);
+                    }
+                }
+                else if (_active[1] && DateTime.Now > _timeLeft[1])
+                {
+                    vehicle.IsRightIndicatorLightOn = _active[1] = false;
+                }
             }
         }
     }

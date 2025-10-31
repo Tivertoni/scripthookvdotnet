@@ -2,49 +2,53 @@ using System;
 using GTA;
 using GTA.Native;
 
-public class ExitVehicle : Script
+
+namespace ExitVehicle
 {
-    public ExitVehicle()
+    public class ExitVehicle : Script
     {
-        Tick += OnTick;
-    }
-
-    private DateTime _lastExit;
-
-    private void OnTick(object sender, EventArgs e)
-    {
-        Ped playerPed = Game.LocalPlayerPed;
-
-        if (Game.IsControlPressed(Control.VehicleExit) && DateTime.Now > _lastExit && playerPed.IsInVehicle())
+        public ExitVehicle()
         {
-            Wait(250);
+            Tick += OnTick;
+        }
 
-            Vehicle vehicle = playerPed.CurrentVehicle;
+        private DateTime _lastExit;
 
-            if (vehicle == null)
+        private void OnTick(object sender, EventArgs e)
+        {
+            Ped playerPed = Game.LocalPlayerPed;
+
+            if (Game.IsControlPressed(Control.VehicleExit) && DateTime.Now > _lastExit && playerPed.IsInVehicle())
             {
-                return;
-            }
+                Wait(250);
 
-            bool isPlayerTheDriver = vehicle.GetPedOnSeat(VehicleSeat.Driver) == playerPed;
+                Vehicle vehicle = playerPed.CurrentVehicle;
 
-            if (Game.IsControlPressed(Control.VehicleExit))
-            {
-                playerPed.Task.LeaveVehicle(vehicle, true);
-            }
-            else
-            {
-                playerPed.Task.LeaveVehicle(vehicle, false);
-
-                Wait(0);
-
-                if (isPlayerTheDriver)
+                if (vehicle == null)
                 {
-                    vehicle.IsEngineRunning = true;
+                    return;
                 }
-            }
 
-            _lastExit = DateTime.Now + TimeSpan.FromMilliseconds(2000);
+                bool isPlayerTheDriver = vehicle.GetPedOnSeat(VehicleSeat.Driver) == playerPed;
+
+                if (Game.IsControlPressed(Control.VehicleExit))
+                {
+                    playerPed.Task.LeaveVehicle(vehicle, true);
+                }
+                else
+                {
+                    playerPed.Task.LeaveVehicle(vehicle, false);
+
+                    Wait(0);
+
+                    if (isPlayerTheDriver)
+                    {
+                        vehicle.IsEngineRunning = true;
+                    }
+                }
+
+                _lastExit = DateTime.Now + TimeSpan.FromMilliseconds(2000);
+            }
         }
     }
 }
