@@ -1,6 +1,7 @@
 using GTA;
 using GTA.Math;
 using GTA.NaturalMotion;
+using System.Windows.Forms;
 
 namespace FakeElectrocutionShotDemo
 {
@@ -486,11 +487,11 @@ namespace FakeElectrocutionShotDemo
             staggerFallNM.Stop();
         }
 
-        private void FakeElectrocutionShotDemo_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void FakeElectrocutionShotDemo_KeyDown(object sender, KeyEventArgs e)
         {
             Ped playerPed = Game.LocalPlayerPed;
 
-            if (e.KeyCode == System.Windows.Forms.Keys.J)
+            if (e.KeyCode == Keys.J)
             {
                 // Switch the player ped to a ragdoll so they can receive NaturalMotion messages.
                 // This method starts a new ragdoll task.
@@ -502,7 +503,7 @@ namespace FakeElectrocutionShotDemo
                 StartNormalWeaponNmMessages(playerPed);
                 StartShotElectrocuteMessages(playerPed);
             }
-            else if (e.KeyCode == System.Windows.Forms.Keys.K)
+            else if (e.KeyCode == Keys.K)
             {
                 // Send the player ped message so they will move like when a stun gun bullet hits them in the left leg, but never start a new ragdoll task
                 playerPed.ApplyRelativeForceRelativeOffset(new Vector3(0f, -1.5f, 0f), Vector3.Zero, ForceType.ExternalImpulse, RagdollComponent.ShinRight, true, false, false);

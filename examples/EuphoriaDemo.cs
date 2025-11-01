@@ -1,4 +1,5 @@
 using GTA;
+using System.Windows.Forms;
 
 namespace EuphoriaDemo
 {
@@ -26,11 +27,11 @@ namespace EuphoriaDemo
             KeyDown += EuphoriaDemo_KeyDown;
         }
 
-        private void EuphoriaDemo_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void EuphoriaDemo_KeyDown(object sender, KeyEventArgs e)
         {
             Ped playerPed = Game.LocalPlayerPed;
 
-            if (e.KeyCode == System.Windows.Forms.Keys.J)
+            if (e.KeyCode == Keys.J)
             {
                 // Make sure all arguments have their default value
                 playerPed.Euphoria.ArmsWindmillAdaptive.ResetArguments();
@@ -54,7 +55,7 @@ namespace EuphoriaDemo
                 playerPed.Euphoria.BodyBalance.Start();
 
             }
-            else if (e.KeyCode == System.Windows.Forms.Keys.K)
+            else if (e.KeyCode == Keys.K)
             {
                 // Make sure all arguments have their default value
                 playerPed.Euphoria.ApplyImpulse.ResetArguments();
@@ -68,7 +69,7 @@ namespace EuphoriaDemo
 
                 // No need for the body balance helper on this, since the pedestrian would fall over anyway
             }
-            else if (e.KeyCode == System.Windows.Forms.Keys.L)
+            else if (e.KeyCode == Keys.L)
             {
                 playerPed.Euphoria.ShotFallToKnees.ResetArguments();
 
