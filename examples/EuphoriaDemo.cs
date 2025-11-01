@@ -2,6 +2,23 @@ using GTA;
 
 namespace EuphoriaDemo
 {
+    /// <summary>
+    /// Script that demonstrates Euphoria physics interactions on the player character in GTA V.
+    /// </summary>
+    /// <remarks>
+    /// Allows triggering different physics-based animations using keyboard keys:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>Press J: Perform an arm windmill animation while maintaining balance.</description>
+    /// </item>
+    /// <item>
+    /// <description>Press K: Apply a strong forward impulse to knock the player back.</description>
+    /// </item>
+    /// <item>
+    /// <description>Press L: Trigger a fall-to-knees animation.</description>
+    /// </item>
+    /// </list>
+    /// </remarks>
     public class EuphoriaDemo : Script
     {
         public EuphoriaDemo()

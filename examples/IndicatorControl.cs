@@ -3,6 +3,14 @@ using GTA;
 
 namespace IndicatorControl
 {
+    /// <summary>
+    /// Script to control vehicle turn indicators in GTA V.
+    /// </summary>
+    /// <remarks>
+    /// This script automatically turns on the vehicle's left or right indicators
+    /// when the player presses the corresponding movement controls at low speed.
+    /// Each indicator turns off automatically after 3 seconds if the control is released.
+    /// </remarks>
     public class IndicatorControl : Script
     {
         public IndicatorControl()

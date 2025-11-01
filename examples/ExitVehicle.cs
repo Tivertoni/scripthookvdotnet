@@ -5,6 +5,9 @@ using GTA.Native;
 
 namespace ExitVehicle
 {
+    /// <summary>
+    /// Script that allows the engine of a vehicle to still be running when the player exits it without holding <see cref="Control.VehicleExit"/>.
+    /// </summary>
     public class ExitVehicle : Script
     {
         public ExitVehicle()

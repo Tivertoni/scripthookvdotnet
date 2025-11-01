@@ -4,13 +4,20 @@ using GTA;
 
 namespace ScriptInstance
 {
-    // Main script is auto-started and creates AI scripts using key presses.
-    // T key to spawn AIone
-    // Y key to spawn AItwo
-    // G key to change AIone animation 
-    // H key to SetWait(6) for AItwo
-    // J key to pause AIone
-
+    /// <summary>
+    /// This example consists of two scripts. This is the first one, which manages the AI pedestrian scripts using key presses.
+    /// </summary>
+    /// <remarks>
+    /// Key controls:
+    /// <list type="bullet">
+    /// <item><description>T: Spawn or reset AIone.</description></item>
+    /// <item><description>Y: Spawn or reset AItwo.</description></item>
+    /// <item><description>G: Toggle AIone's animation between "Jump" and "HandsUp".</description></item>
+    /// <item><description>H: Set the wait time for AItwo's next action (6000ms in this example).</description></item>
+    /// <item><description>J: Pause or resume AIone.</description></item>
+    /// </list>
+    /// The script automatically runs every 1000ms to process key events and manage AI spawning.
+    /// </remarks>
     public class Main : Script
     {
         private AI AIone = null;
@@ -109,6 +116,20 @@ namespace ScriptInstance
         }
     }
 
+    /// <summary>
+    /// This example consists of two scripts. This is the second one, which represents an AI pedestrian script that performs actions and animations.
+    /// </summary>
+    /// <remarks>
+    /// - Creates a ped in front of the player if none exists.
+    /// - Executes the selected animation repeatedly while the ped is alive.
+    /// - Supports a wait timer for delaying actions.
+    /// - Cleans up the ped when the script is aborted.
+    /// - Animation options:
+    ///   <list type="bullet">
+    ///     <item><description>"HandsUp": Ped raises hands for 1 second.</description></item>
+    ///     <item><description>"Jump": Ped performs a jump task.</description></item>
+    ///   </list>
+    /// </remarks>
     [ScriptAttributes(NoDefaultInstance = true)]
     public class AI : Script
     {

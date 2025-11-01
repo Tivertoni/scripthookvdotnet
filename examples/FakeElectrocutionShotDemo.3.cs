@@ -8,8 +8,12 @@ using System.Linq;
 
 namespace FakeElectrocutionShotDemo
 {
-    // Mimic electrocution with the stun gun by sending NM messages to the player ped.
-    // You can find similar config in physicstasks.ymt (search for "CTaskNMShot").
+    /// <summary>
+    /// Script that mimics electrocution with the stun gun by sending NM messages to the player ped.
+    /// </summary>
+    /// <remarks>
+    /// You can find similar config in <c>physicstasks.ymt</c> (search for "<c>CTaskNMShot</c>").
+    /// </remarks>
     public class FakeElectrocutionShotDemo : Script
     {
         public FakeElectrocutionShotDemo()
