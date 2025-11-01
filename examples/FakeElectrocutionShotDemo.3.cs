@@ -1,10 +1,6 @@
 using GTA;
 using GTA.Math;
 using GTA.NaturalMotion;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 
 namespace FakeElectrocutionShotDemo
 {
