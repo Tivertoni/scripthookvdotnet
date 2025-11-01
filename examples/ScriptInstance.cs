@@ -1,9 +1,11 @@
 using System;
 using System.Windows.Forms;
 using GTA;
+using GTA.UI;
 
 namespace ScriptInstance
 {
+    
     /// <summary>
     /// This example consists of two scripts. This is the first one, which manages the AI pedestrian scripts using key presses.
     /// </summary>
@@ -18,6 +20,7 @@ namespace ScriptInstance
     /// </list>
     /// The script automatically runs every 1000ms to process key events and manage AI spawning.
     /// </remarks>
+    ///
     public class Main : Script
     {
         private AI AIone = null;
@@ -32,87 +35,84 @@ namespace ScriptInstance
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.T) // Create AI Script and store as AIone
+            //Creates or aborts AI Script and stores it as AIone.
+            if (e.KeyCode == Keys.T)
             {
-                SpawnAIone();
+                SpawnAI(ref AIone, 1);
+                return;
             }
-            else if (e.KeyCode == Keys.Y) // Create AI Script and store as AItwo
+
+            //Creates or aborts AI Script and stores it as AItwo.
+            if (e.KeyCode == Keys.Y)
             {
-                SpawnAItwo();
+                SpawnAI(ref AItwo, 2);
+                return;
             }
-            else if (e.KeyCode == Keys.G) // Changes AIone animation
+
+            //Changes the animation of AIone between "Jump" and "HandsUp".
+            if (e.KeyCode == Keys.G)
             {
                 if (AIone != null)
                 {
-                    if (AIone.animation == "Jump")
+                    if (AIone.Animation == "Jump")
                     {
-                        AIone.animation = "HandsUp";
+                        AIone.Animation = "HandsUp";
                     }
                     else
                     {
-                        AIone.animation = "Jump";
+                        AIone.Animation = "Jump";
                     }
 
-                    GTA.UI.Notification.Show("SpawnAI: Animation(" + AIone.animation + ");");
+                    Notification.PostTicker($"AI-1: Now playing animation \"{AIone.Animation}\"", true);
                 }
+
+                return;
             }
-            else if (e.KeyCode == Keys.H) // Sets Wait() for AItwo
+
+            // Sets Wait() for AI-2
+            if (e.KeyCode == Keys.H)
             {
                 AItwo.SetWait(6000);
+
+                return;
             }
-            else if (e.KeyCode == Keys.J) // Toggles Pause() for AIone
+
+            //Toggles between Pause() and Resume() for AI-1
+            if (e.KeyCode == Keys.J)
             {
                 if (AIone.IsPaused)
                 {
                     AIone.Resume();
+                    return;
                 }
-                else
-                {
-                    AIone.Pause();
-                }
+
+                AIone.Pause();
+                return;
             }
         }
 
-        private void SpawnAIone()
+        public void SpawnAI(ref AI ai, int index)
         {
-            if (AIone == null)
+            if (ai != null || ai.IsRunning)
             {
-                AIone = InstantiateScript<AI>();
+                ai.Abort();
 
-                if (AIone != null)
-                {
-                    GTA.UI.Notification.Show("SpawnAI: Ped(1);");
-                }
+                // Instead of setting AI to null, you can also check its status with 'IsRunning'
+                ai = null;
+
+                Notification.PostTicker($"{nameof(SpawnAI)}: Aborted AI-{index};", true);
+
+                return;
             }
-            else
+
+            ai = InstantiateScript<AI>();
+
+            if (ai == null || !ai.IsRunning)
             {
-                AIone.Abort();
-
-                AIone = null; // Clear instance to create a new script next time
-
-                GTA.UI.Notification.Show("SpawnAI: Ped(1).Abort();");
+                return;
             }
-        }
 
-        private void SpawnAItwo()
-        {
-            if (AItwo == null || !AItwo.IsRunning)
-            {
-                AItwo = InstantiateScript<AI>();
-
-                if (AItwo != null)
-                {
-                    GTA.UI.Notification.Show("SpawnAI: Ped(2);");
-                }
-            }
-            else
-            {
-                AItwo.Abort();
-
-                // Instead of setting AItwo to null, can also checking status with 'IsRunning'
-
-                GTA.UI.Notification.Show("SpawnAI: Ped(2).Abort();");
-            }
+            Notification.PostTicker($"{nameof(SpawnAI)}: Instantiated AI-{index};", true);
         }
     }
 
@@ -133,6 +133,10 @@ namespace ScriptInstance
     [ScriptAttributes(NoDefaultInstance = true)]
     public class AI : Script
     {
+        private Ped ped = null;
+        private int wait = -1;
+        public string Animation = "HandsUp";
+
         public AI()
         {
             Tick += OnTick;
@@ -141,23 +145,12 @@ namespace ScriptInstance
             Interval = 3000;
         }
 
-        private Ped ped = null;
-        private int wait = -1;
-        public string animation = "HandsUp";
-
-        public void SetWait(int ms)
-        {
-            if (ms > wait)
-            {
-                wait = ms;
-            }
-        }
-
         private void OnTick(object sender, EventArgs e)
         {
             if (wait > -1)
             {
                 Wait(wait);
+
                 wait = -1;
             }
 
@@ -169,11 +162,11 @@ namespace ScriptInstance
             // Repeat animation if alive
             if (ped != null && ped.IsAlive)
             {
-                if (animation == "HandsUp")
+                if (Animation == "HandsUp")
                 {
                     ped.Task.HandsUp(1000);
                 }
-                else if (animation == "Jump")
+                else if (Animation == "Jump")
                 {
                     ped.Task.Jump();
                 }
@@ -184,6 +177,18 @@ namespace ScriptInstance
         {
             // Clear pedestrian on script abort
             ped?.Delete();
+        }
+
+        /// <summary>
+        /// If ms is greater than the current wait time, set wait time to ms.
+        /// </summary>
+        /// <param name="ms">Wait time in ms.</param>
+        public void SetWait(int ms)
+        {
+            if (ms > wait)
+            {
+                wait = ms;
+            }
         }
     }
 }
