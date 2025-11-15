@@ -1207,7 +1207,7 @@ namespace GTA
         {
             if (Game.FileVersion < VersionConstsForGameVersion.v1_0_1868_0)
             {
-                return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, GetEventTypeIndexForB1737OrOlder(eventType));
+                return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, GetEventTypeIndexPreB1868(eventType));
             }
 
             return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, (int)eventType);
@@ -1224,33 +1224,45 @@ namespace GTA
         {
             if (Game.FileVersion < VersionConstsForGameVersion.v1_0_1868_0)
             {
-                return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, GetEventTypeIndexForB1737OrOlder(eventType));
+                return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, GetEventTypeIndexPreB1868(eventType));
             }
 
             return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, (int)eventType);
         }
 
-        private int GetEventTypeIndexForB1737OrOlder(EventType eventType)
+        /// <summary>
+        /// Retrieves the index of an <see cref="EventType"/> aligned to pre-B1868 game versions.
+        /// </summary>
+        /// <param name="eventType">The <see cref="EventType"/> to align.</param>
+        /// <returns>The aligned event index.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="eventType"/> is 
+        /// <see cref="EventType.Incapacitated"/> or <see cref="EventType.ShockingBrokenGlass"/> 
+        /// because these values are not supported in versions prior to v1.0.1868.0.
+        /// </exception>
+        private static int GetEventTypeIndexPreB1868(EventType eventType)
         {
-            if (eventType == EventType.Incapacitated)
+            if (eventType == EventType.Incapacitated ||
+                eventType == EventType.ShockingBrokenGlass)
             {
-                ThrowHelper.ThrowArgumentException("EventType.Incapacitated is not available in the game versions prior to v1.0.1868.0.", nameof(eventType));
-            }
-            if (eventType == EventType.ShockingBrokenGlass)
-            {
-                ThrowHelper.ThrowArgumentException("EventType.ShockingBrokenGlass is not available in the game versions prior to v1.0.1868.0.", nameof(eventType));
+                ThrowHelper.ThrowArgumentException(
+                    $"{nameof(EventType)}.{eventType} is not available in game versions prior to v1.0.1868.0.",
+                    nameof(eventType));
             }
 
-            int eventTypeCorrected = (int)eventType;
-            if (eventTypeCorrected >= (int)EventType.ShockingCarAlarm)
+            int eventTypeInt = (int)eventType;
+
+            if (eventTypeInt >= (int)EventType.ShockingCarAlarm)
             {
-                eventTypeCorrected -= 2;
+                return eventTypeInt - 2;
             }
-            else if (eventTypeCorrected >= (int)EventType.LeaderEnteredCarAsDriver)
+
+            if (eventTypeInt >= (int)EventType.LeaderEnteredCarAsDriver)
             {
-                --eventTypeCorrected;
+                return eventTypeInt - 1;
             }
-            return eventTypeCorrected;
+
+            return eventTypeInt;
         }
 
         #endregion
