@@ -1166,12 +1166,8 @@ namespace GTA
 
         public bool HasReceivedEvent(EventType eventType)
         {
-            if (Game.FileVersion < VersionConstsForGameVersion.v1_0_1868_0)
-            {
-                return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, GetEventTypeIndexPreB1868(eventType));
-            }
-
-            return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, (int)eventType);
+            // GetValue() is an extension method for EventType that returns the aligned value for the current game build!
+            return Function.Call<bool>(Hash.HAS_PED_RECEIVED_EVENT, Handle, eventType.GetValue());
         }
 
         /// <summary>
@@ -1183,47 +1179,8 @@ namespace GTA
         /// </value>
         public bool IsRespondingToEvent(EventType eventType)
         {
-            if (Game.FileVersion < VersionConstsForGameVersion.v1_0_1868_0)
-            {
-                return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, GetEventTypeIndexPreB1868(eventType));
-            }
-
-            return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, (int)eventType);
-        }
-
-        /// <summary>
-        /// Retrieves the index of an <see cref="EventType"/> aligned to pre-B1868 game versions.
-        /// </summary>
-        /// <param name="eventType">The <see cref="EventType"/> to align.</param>
-        /// <returns>The aligned event index.</returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when <paramref name="eventType"/> is 
-        /// <see cref="EventType.Incapacitated"/> or <see cref="EventType.ShockingBrokenGlass"/> 
-        /// because these values are not supported in versions prior to v1.0.1868.0.
-        /// </exception>
-        private static int GetEventTypeIndexPreB1868(EventType eventType)
-        {
-            if (eventType == EventType.Incapacitated ||
-                eventType == EventType.ShockingBrokenGlass)
-            {
-                ThrowHelper.ThrowArgumentException(
-                    $"{nameof(EventType)}.{eventType} is not available in game versions prior to v1.0.1868.0.",
-                    nameof(eventType));
-            }
-
-            int eventTypeInt = (int)eventType;
-
-            if (eventTypeInt >= (int)EventType.ShockingCarAlarm)
-            {
-                return eventTypeInt - 2;
-            }
-
-            if (eventTypeInt >= (int)EventType.LeaderEnteredCarAsDriver)
-            {
-                return eventTypeInt - 1;
-            }
-
-            return eventTypeInt;
+            // GetValue() is an extension method for EventType that returns the aligned value for the current game build!
+            return Function.Call<bool>(Hash.IS_PED_RESPONDING_TO_EVENT, Handle, eventType.GetValue());
         }
 
         #endregion
